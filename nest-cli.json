@@ -1,32 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/mat-cafe-backend-sofka/src",
+  "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true,
-    "webpack": true,
-    "tsConfigPath": "apps/mat-cafe-backend-sofka/tsconfig.app.json"
-  },
-  "monorepo": true,
-  "root": "apps/mat-cafe-backend-sofka",
-  "projects": {
-    "mat-cafe-backend-sofka": {
-      "type": "application",
-      "root": "apps/mat-cafe-backend-sofka",
-      "entryFile": "main",
-      "sourceRoot": "apps/mat-cafe-backend-sofka/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/mat-cafe-backend-sofka/tsconfig.app.json"
-      }
-    },
-    "campus": {
-      "type": "application",
-      "root": "apps/campus",
-      "entryFile": "main",
-      "sourceRoot": "apps/campus/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/campus/tsconfig.app.json"
-      }
-    }
+    "deleteOutDir": true
   }
 }
