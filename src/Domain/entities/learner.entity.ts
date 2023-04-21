@@ -1,6 +1,6 @@
 import { ICalification, ILearner, IRoute } from '../interface';
 
-export class Learner implements ILearner {
+export class LearnerEntity implements ILearner {
   calification: ICalification[];
   route: IRoute[];
   email: string;

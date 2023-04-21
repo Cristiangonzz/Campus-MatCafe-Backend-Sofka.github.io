@@ -1,6 +1,6 @@
 import { INotification } from '../interface/notifiation.interface';
 
-export class Notification implements INotification {
+export class NotificationEntity implements INotification {
   id: string;
   repo: string;
   course: string;

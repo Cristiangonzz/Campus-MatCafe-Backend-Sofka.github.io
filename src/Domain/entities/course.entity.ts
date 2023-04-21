@@ -1,6 +1,6 @@
 import { ICourse } from '..';
 
-export class Course implements ICourse {
+export class CourseEntity implements ICourse {
   title: string;
   description: string;
   duration: string;
