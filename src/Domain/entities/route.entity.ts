@@ -1,6 +1,6 @@
 import { ICourse, IRoute } from '..';
 
-export class Route implements IRoute {
+export class RouteEntity implements IRoute {
   title: string;
   description: string;
   duration: string;
