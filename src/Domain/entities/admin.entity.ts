@@ -6,17 +6,17 @@ export class AdminEntity implements IAdmin {
   route?: IRoute[];
   notifications?: NotificationEntity[];
   email: string;
-  firebaseId: string;
+  firebaseId?: string;
   name: string;
-  photoUrl: string;
+  photoUrl?: string;
   rol: boolean;
 
   constructor(
     name: string,
     email: string,
-    firebaseId: string,
-    photoUrl: string,
     rol: boolean,
+    firebaseId?: string,
+    photoUrl?: string,
   ) {
     this.name = name;
     this.email = email;
