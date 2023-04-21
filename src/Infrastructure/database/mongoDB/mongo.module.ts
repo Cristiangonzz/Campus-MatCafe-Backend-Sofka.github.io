@@ -1,10 +1,10 @@
-import { Module } from "@nestjs/common/decorators/modules/module.decorator";
+import { Module } from '@nestjs/common/decorators/modules/module.decorator';
 
 @Module({
   imports: [],
-  
+
   controllers: [],
   providers: [],
-  exports: [ ],
+  exports: [],
 })
 export class MongoModule {}
