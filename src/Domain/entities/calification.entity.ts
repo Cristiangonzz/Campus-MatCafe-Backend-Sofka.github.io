@@ -1,12 +1,12 @@
 import { ICalification } from '../interface';
-import { Course } from './course.entity';
+import { CourseEntity } from './course.entity';
 
-export class Calification implements ICalification {
+export class CalificationEntity implements ICalification {
   grade?: number;
   comment?: string;
-  courses: Course[];
+  courses: CourseEntity[];
 
-  constructor(courses: Course[], grade?: number, comment?: string) {
+  constructor(courses: CourseEntity[], grade?: number, comment?: string) {
     this.grade = grade;
     this.comment = comment;
     this.courses = courses;

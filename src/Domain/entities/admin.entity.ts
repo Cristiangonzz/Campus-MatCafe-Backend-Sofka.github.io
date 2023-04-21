@@ -1,6 +1,6 @@
 import { IAdmin, ICourse, IRoute } from '../interface';
 
-export class Admin implements IAdmin {
+export class AdminEntity implements IAdmin {
   course?: ICourse[];
   route?: IRoute[];
   notifications?: { id: string; repo: string; course: string }[];
