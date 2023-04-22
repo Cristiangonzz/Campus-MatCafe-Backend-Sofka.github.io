@@ -1,3 +1,4 @@
+import { CalificationEntity } from './../entities/calification.entity';
 import { Observable } from 'rxjs';
 import { AdminEntity } from '../entities/admin.entity';
 import { LearnerEntity } from '../entities/learner.entity';
@@ -12,4 +13,8 @@ export interface IAdminDomainService {
     email: string,
     Learner: LearnerEntity,
   ): Observable<LearnerEntity>;
+  gradeStudent(
+    learnerId: string,
+    calification: CalificationEntity,
+  ): Observable<string>;
 }
