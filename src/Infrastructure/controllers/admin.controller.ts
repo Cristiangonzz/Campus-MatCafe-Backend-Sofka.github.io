@@ -55,13 +55,10 @@ export class AdminController {
     this.delegate.toGetLernerByEmail();
     return this.delegate.execute(email);
   }
-<<<<<<< HEAD
-=======
 
   @Post('graderStudent')
   graderStudent(@Body() learner: CalificationDto): Observable<string> {
     this.delegate.toGradeStudent();
     return this.delegate.execute(learner.learnerId, learner);
   }
->>>>>>> e49be27ea6e4a3947e41e960bdadf7d052427282
 }
