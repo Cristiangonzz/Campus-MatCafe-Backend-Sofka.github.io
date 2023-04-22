@@ -25,26 +25,32 @@ export class AdminController {
     return this.delegate.execute(learner);
   }
 
-  @Put('updateAdmin')
-  updateAdmin(@Body() admin: UpdateUserDto): Observable<AdminEntity> {
+  @Put('updateAdmin/:email')
+  updateAdmin(
+    @Body() admin: UpdateUserDto,
+    @Param('email') email: string,
+  ): Observable<AdminEntity> {
     this.delegate.toUpdateAdmin();
-    return this.delegate.execute(admin);
+    return this.delegate.execute(email, admin);
   }
 
-  @Put('updateLearner')
-  updateLearner(@Body() learner: UpdateUserDto): Observable<LearnerEntity> {
+  @Put('updateLearner/:email')
+  updateLearner(
+    @Body() learner: UpdateUserDto,
+    @Param('email') email: string,
+  ): Observable<LearnerEntity> {
     this.delegate.toUpdateLearner();
-    return this.delegate.execute(learner);
+    return this.delegate.execute(email, learner);
   }
 
   @Get('admin/:email')
-  getAdminByEmail(@Param() email: string): Observable<AdminEntity> {
+  getAdminByEmail(@Param('email') email: string): Observable<AdminEntity> {
     this.delegate.toGetAdminByEmail();
     return this.delegate.execute(email);
   }
 
   @Get('learner/:email')
-  getLearnerByEmail(@Param() email: string): Observable<LearnerEntity> {
+  getLearnerByEmail(@Param('email') email: string): Observable<LearnerEntity> {
     this.delegate.toGetLernerByEmail();
     return this.delegate.execute(email);
   }

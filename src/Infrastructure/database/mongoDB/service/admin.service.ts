@@ -1,10 +1,12 @@
+import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { LearnerEntity } from 'src/Domain/entities/Learner.entity';
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
 import { IAdminDomainService } from '../../../../Domain/service/admin.service';
 import { AdminRepository } from '../repository/admin.repository';
 
-export class AdminDomainService implements IAdminDomainService {
+@Injectable()
+export class AdminMongoService implements IAdminDomainService {
   constructor(private readonly adminRepository: AdminRepository) {}
   getAdminByEmail(email: string): Observable<AdminEntity> {
     return this.adminRepository.getAdminByEmail(email);
@@ -19,11 +21,14 @@ export class AdminDomainService implements IAdminDomainService {
     return this.adminRepository.createAdmin(Admin);
   }
 
-  updateAdmin(Admin: AdminEntity): Observable<AdminEntity> {
-    return this.adminRepository.updateAdmin(Admin);
+  updateAdmin(email: string, admin: AdminEntity): Observable<AdminEntity> {
+    return this.adminRepository.updateAdmin(email, admin);
   }
 
-  updateLearner(Learner: LearnerEntity): Observable<LearnerEntity> {
-    return this.adminRepository.updateLearner(Learner);
+  updateLearner(
+    admin: string,
+    Learner: LearnerEntity,
+  ): Observable<LearnerEntity> {
+    return this.adminRepository.updateLearner(admin, Learner);
   }
 }

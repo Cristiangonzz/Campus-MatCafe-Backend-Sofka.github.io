@@ -7,6 +7,9 @@ export interface IAdminDomainService {
   createAdmin(Admin: AdminEntity): Observable<AdminEntity>;
   getAdminByEmail(email: string): Observable<AdminEntity>;
   getLearnerByEmail(email: string): Observable<LearnerEntity>;
-  updateAdmin(Admin: AdminEntity): Observable<AdminEntity>;
-  updateLearner(Learner: LearnerEntity): Observable<LearnerEntity>;
+  updateAdmin(email: string, admin: AdminEntity): Observable<AdminEntity>;
+  updateLearner(
+    email: string,
+    Learner: LearnerEntity,
+  ): Observable<LearnerEntity>;
 }

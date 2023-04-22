@@ -1,15 +1,18 @@
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Admin } from 'mongodb';
 import { Model } from 'mongoose';
 import { Observable, from } from 'rxjs';
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
 import { LearnerEntity } from 'src/Domain/entities/learner.entity';
+import { Admin, AdminDocument } from '../schemas/admin.schema';
+import { Learner, LearnerDocument } from '../schemas/learner.schema';
+@Injectable()
 export class AdminRepository {
   constructor(
     @InjectModel(Admin.name)
-    private readonly adminRepository: Model<AdminEntity>,
-    @InjectModel(LearnerEntity.name)
-    private readonly learnerRepository: Model<LearnerEntity>,
+    private readonly adminRepository: Model<AdminDocument>,
+    @InjectModel(Learner.name)
+    private readonly learnerRepository: Model<LearnerDocument>,
   ) {}
 
   createAdmin(admin: AdminEntity): Observable<AdminEntity> {
@@ -25,23 +28,26 @@ export class AdminRepository {
   }
 
   getLernerByEmail(email: string): Observable<LearnerEntity> {
-    return from(this.learnerRepository.findOne({ email }));
+    return from(this.learnerRepository.findOne({ email }).exec());
   }
 
-  updateAdmin(admin: AdminEntity): Observable<AdminEntity> {
+  updateAdmin(email: string, admin: AdminEntity): Observable<AdminEntity> {
     return from(
       this.adminRepository.findOneAndUpdate(
-        { email: admin.email },
+        { email },
         { $set: admin },
         { new: true },
       ),
     );
   }
 
-  updateLearner(learner: LearnerEntity): Observable<LearnerEntity> {
+  updateLearner(
+    email: string,
+    learner: LearnerEntity,
+  ): Observable<LearnerEntity> {
     return from(
       this.learnerRepository.findOneAndUpdate(
-        { email: learner.email },
+        { email: email },
         { $set: learner },
         { new: true },
       ),

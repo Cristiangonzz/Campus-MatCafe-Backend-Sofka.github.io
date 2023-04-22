@@ -6,7 +6,7 @@ import { IUseCase } from '../../interface/use-case.interface';
 export class UpdateAdminUseCase implements IUseCase {
   constructor(private readonly service: IAdminDomainService) {}
 
-  execute(admin: AdminEntity): Observable<AdminEntity> {
-    return this.service.updateAdmin(admin);
+  execute(email: string, admin: AdminEntity): Observable<AdminEntity> {
+    return this.service.updateAdmin(email, admin);
   }
 }

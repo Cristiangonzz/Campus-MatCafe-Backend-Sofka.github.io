@@ -1,3 +1,5 @@
-import { AdminDomainService } from '../database/mongoDB/service/admin.service';
+import { Injectable } from '@nestjs/common';
+import { AdminMongoService } from '../database/mongoDB/service/admin.service';
 
-export class AdminService extends AdminDomainService {}
+@Injectable()
+export class AdminService extends AdminMongoService {}
