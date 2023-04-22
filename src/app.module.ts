@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { RouteController } from './Infrastructure/controllers/routeController';
+import { IRouteRepository } from './Infrastructure/database/mongoDB/repository/route-repository';
+import { MongoModule } from './Infrastructure';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [MongoModule],
+  controllers: [RouteController],
+  providers: [IRouteRepository],
 })
 export class AppModule {}

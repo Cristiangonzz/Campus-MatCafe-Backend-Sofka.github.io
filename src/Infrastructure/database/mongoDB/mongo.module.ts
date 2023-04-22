@@ -1,5 +1,15 @@
 import { Module } from '@nestjs/common/decorators/modules/module.decorator';
 import { MongooseModule } from '@nestjs/mongoose';
+import {
+  Admin,
+  AdminSchema,
+  Course,
+  CourseSchema,
+  Learner,
+  LearnerSchema,
+  Route,
+  RouteSchema,
+} from './schemas';
 
 @Module({
   imports: [
@@ -9,10 +19,23 @@ import { MongooseModule } from '@nestjs/mongoose';
         autoCreate: true,
       },
     ),
+    MongooseModule.forFeature([
+      { name: Route.name, schema: RouteSchema },
+      { name: Admin.name, schema: AdminSchema },
+      { name: Learner.name, schema: LearnerSchema },
+      { name: Course.name, schema: CourseSchema },
+    ]),
   ],
 
   controllers: [],
   providers: [],
-  exports: [],
+  exports: [
+    MongooseModule.forFeature([
+      { name: Route.name, schema: RouteSchema },
+      { name: Admin.name, schema: AdminSchema },
+      { name: Learner.name, schema: LearnerSchema },
+      { name: Course.name, schema: CourseSchema },
+    ]),
+  ],
 })
 export class MongoModule {}

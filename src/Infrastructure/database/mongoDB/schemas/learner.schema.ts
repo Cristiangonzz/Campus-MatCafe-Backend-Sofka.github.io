@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ILearner, ICalification } from '../../../../Domain';
+import { ICalification } from '../../../../Domain';
 import { RouteEntity } from '../../../../Domain/entities/route.entity';
 
-export type LearnerDocument = LearnerEntity & Document;
+export type LearnerDocument = Learner & Document;
 
 @Schema()
-export class LearnerEntity implements ILearner {
+export class Learner {
   @Prop()
   calification: ICalification[];
 
@@ -28,4 +28,4 @@ export class LearnerEntity implements ILearner {
   rol: boolean;
 }
 
-export const LearnerSchema = SchemaFactory.createForClass(LearnerEntity);
+export const LearnerSchema = SchemaFactory.createForClass(Learner);
