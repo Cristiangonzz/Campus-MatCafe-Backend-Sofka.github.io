@@ -1,2 +1,3 @@
 export * from './delegate';
-export * from './useCase';
+export * from './interface';
+export * from './use-case';

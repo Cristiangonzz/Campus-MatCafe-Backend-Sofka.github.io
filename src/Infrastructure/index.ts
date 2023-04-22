@@ -1,5 +1,6 @@
 export * from './controllers';
 export * from './database';
-export * from './messaging';
+export * from './dto';
+export * from './infrastructure.module';
 export * from './service';
 export * from './utils';
