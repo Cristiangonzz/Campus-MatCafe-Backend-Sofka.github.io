@@ -2,7 +2,6 @@ import { CalificationEntity } from './../entities/calification.entity';
 import { Observable } from 'rxjs';
 import { AdminEntity } from '../entities/admin.entity';
 import { LearnerEntity } from '../entities/learner.entity';
-
 export interface IAdminDomainService {
   createLearner(Learner: LearnerEntity): Observable<LearnerEntity>;
   createAdmin(Admin: AdminEntity): Observable<AdminEntity>;
