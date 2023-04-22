@@ -6,6 +6,7 @@ import { LearnerEntity } from '../../Domain/entities/learner.entity';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserDto } from '../dto/user.dto';
 import { AdminService } from '../service/admin.service';
+import { CalificationDto } from '../utils/DTO/Calification.dto';
 @Controller('')
 export class AdminController {
   private delegate: AdminDelegate;
@@ -53,5 +54,11 @@ export class AdminController {
   getLearnerByEmail(@Param('email') email: string): Observable<LearnerEntity> {
     this.delegate.toGetLernerByEmail();
     return this.delegate.execute(email);
+  }
+
+  @Post('graderStudent')
+  graderStudent(@Body() learner: CalificationDto): Observable<string> {
+    this.delegate.toGradeStudent();
+    return this.delegate.execute(learner.learnerId, learner);
   }
 }

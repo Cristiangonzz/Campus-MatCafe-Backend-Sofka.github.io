@@ -1,6 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common/decorators/modules/module.decorator';
 import { MongooseModule } from '@nestjs/mongoose';
+<<<<<<< HEAD
 
+=======
+import { AdminRepository } from './repository/admin.repository';
+>>>>>>> 7a86c765187255c41ea47b6f4cf6864b99809aae
 import {
   Admin,
   AdminSchema,
@@ -11,6 +15,7 @@ import {
   Route,
   RouteSchema,
 } from './schemas';
+import { AdminMongoService } from './service/admin.service';
 import { CourseRepository } from './repository/course-repository';
 import { RouteRepository } from './repository/route-repository';
 import { CourseServiceMongo } from './service/course.mongo.service';
@@ -35,14 +40,18 @@ import { RouteServiceMongo } from './service/route.mongo.service';
   controllers: [],
 
   providers: [
+    AdminMongoService,
+    AdminRepository,
     CourseRepository,
     RouteRepository,
     CourseServiceMongo,
     RouteServiceMongo,
   ],
   exports: [
-    RouteRepository,
+    AdminMongoService,
+    AdminRepository,
     CourseRepository,
+    RouteRepository,
     CourseServiceMongo,
     RouteServiceMongo,
   ],
