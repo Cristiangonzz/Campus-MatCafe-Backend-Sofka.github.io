@@ -2,10 +2,7 @@ import { CalificationEntity } from './../entities/calification.entity';
 import { Observable } from 'rxjs';
 import { AdminEntity } from '../entities/admin.entity';
 import { LearnerEntity } from '../entities/learner.entity';
-<<<<<<< HEAD
-=======
 
->>>>>>> 607ccf42ce6264be1227de5eb1028215f996c70e
 export interface IAdminDomainService {
   createLearner(Learner: LearnerEntity): Observable<LearnerEntity>;
   createAdmin(Admin: AdminEntity): Observable<AdminEntity>;
@@ -20,8 +17,4 @@ export interface IAdminDomainService {
     learnerId: string,
     calification: CalificationEntity,
   ): Observable<string>;
-<<<<<<< HEAD
-  
-=======
->>>>>>> 607ccf42ce6264be1227de5eb1028215f996c70e
 }
