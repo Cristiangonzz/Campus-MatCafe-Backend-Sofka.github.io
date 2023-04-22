@@ -1,31 +1,33 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ILearner, ICalification } from '../../../../Domain';
+import { ICalification } from '../../../../Domain';
 import { RouteEntity } from '../../../../Domain/entities/route.entity';
 
-export type LearnerDocument = LearnerEntity & Document;
+export type LearnerDocument = Learner & Document;
 
-@Schema()
-export class LearnerEntity implements ILearner {
+@Schema({
+  versionKey: false,
+})
+export class Learner {
   @Prop()
   calification: ICalification[];
 
   @Prop()
   route: RouteEntity[];
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false, unique: true })
   firebaseId: string;
 
   @Prop({ required: true })
   name: string;
 
-  @Prop()
+  @Prop({ required: false })
   photoUrl: string;
 
   @Prop({ required: true })
   rol: boolean;
 }
 
-export const LearnerSchema = SchemaFactory.createForClass(LearnerEntity);
+export const LearnerSchema = SchemaFactory.createForClass(Learner);
