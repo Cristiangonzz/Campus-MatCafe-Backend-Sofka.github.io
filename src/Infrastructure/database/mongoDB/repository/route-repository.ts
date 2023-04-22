@@ -7,7 +7,7 @@ import { Model } from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 @Injectable()
-export class IRouteRepository {
+export class RouteRepository {
   constructor(
     @InjectModel(Route.name)
     private readonly RouteModule: Model<RouteDocument>,

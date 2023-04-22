@@ -4,7 +4,7 @@ import { ICourseDomainService } from '../../../Domain/service';
 export class UpdateCourseUseCase {
   constructor(public readonly CourseDomainService: ICourseDomainService) {}
 
-  execute(Course: CourseEntity): Observable<CourseEntity> {
-    return this.CourseDomainService.updateCourse(Course);
+  execute(id: string, Course: CourseEntity): Observable<CourseEntity> {
+    return this.CourseDomainService.updateCourse(id, Course);
   }
 }

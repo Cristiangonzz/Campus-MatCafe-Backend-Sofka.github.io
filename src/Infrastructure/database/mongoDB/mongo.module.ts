@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common/decorators/modules/module.decorator';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
   Admin,
@@ -10,7 +10,10 @@ import {
   Route,
   RouteSchema,
 } from './schemas';
-
+import { CourseRepository } from './repository/course-repository';
+import { RouteRepository } from './repository/route-repository';
+import { CourseServiceMongo } from './service/course.mongo.service';
+import { RouteServiceMongo } from './service/route.mongo.service';
 @Module({
   imports: [
     MongooseModule.forRoot(
@@ -28,14 +31,17 @@ import {
   ],
 
   controllers: [],
-  providers: [],
+  providers: [
+    CourseRepository,
+    RouteRepository,
+    CourseServiceMongo,
+    RouteServiceMongo,
+  ],
   exports: [
-    MongooseModule.forFeature([
-      { name: Route.name, schema: RouteSchema },
-      { name: Admin.name, schema: AdminSchema },
-      { name: Learner.name, schema: LearnerSchema },
-      { name: Course.name, schema: CourseSchema },
-    ]),
+    RouteRepository,
+    CourseRepository,
+    CourseServiceMongo,
+    RouteServiceMongo,
   ],
 })
 export class MongoModule {}

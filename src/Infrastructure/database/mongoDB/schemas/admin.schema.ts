@@ -5,7 +5,9 @@ import { NotificationEntity } from '../../../../Domain/entities/notification.ent
 
 export type AdminDocument = Admin & Document;
 
-@Schema()
+@Schema({
+  versionKey: false,
+})
 export class Admin {
   @Prop({ type: [{ type: Object }] })
   course?: ICourse[];
@@ -16,17 +18,17 @@ export class Admin {
   @Prop({ type: [{ type: Object, ref: 'Notification' }] })
   notifications?: NotificationEntity[];
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true, unique: true })
   email: string;
 
-  @Prop({ required: true })
-  firebaseId: string;
+  @Prop({ required: false, unique: true })
+  firebaseId?: string;
 
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  photoUrl: string;
+  @Prop({ required: false })
+  photoUrl?: string;
 
   @Prop({ required: true })
   rol: boolean;

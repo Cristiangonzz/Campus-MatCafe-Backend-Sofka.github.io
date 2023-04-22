@@ -9,16 +9,16 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { RouteEntity } from 'src/Domain';
-import { IRouteRepository } from '../database/mongoDB/repository/route-repository';
 import { RouteDelegate } from '../../Application';
 import { UpdateRouteDto } from '../utils/DTO/UpdateRoute.dto';
 import { RegisterRouteDto } from '../utils/DTO/RegisterRoute.dto';
+import { RouteInfrastrucureService } from '../service/route.infrastructure.service';
 
 @Controller('Route')
 export class RouteController {
   private readonly useCase: RouteDelegate;
 
-  constructor(private readonly routeService: IRouteRepository) {
+  constructor(private readonly routeService: RouteInfrastrucureService) {
     this.useCase = new RouteDelegate(this.routeService);
   }
 

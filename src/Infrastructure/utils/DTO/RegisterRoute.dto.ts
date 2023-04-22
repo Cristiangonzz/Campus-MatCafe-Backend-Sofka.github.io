@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 import { ICourse, RouteEntity } from '../../../Domain';
 
 export class RegisterRouteDto implements RouteEntity {
@@ -11,7 +11,7 @@ export class RegisterRouteDto implements RouteEntity {
   @IsString()
   @IsNotEmpty()
   duration: string;
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
   courses: ICourse[];
   @IsString()

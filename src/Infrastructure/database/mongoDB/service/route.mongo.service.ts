@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { IRouteDomainService, RouteEntity } from '../../Domain';
+import { IRouteDomainService, RouteEntity } from '../../../../Domain';
 import { Observable } from 'rxjs';
-import { IRouteRepository } from '../database/mongoDB/repository/route-repository';
+import { RouteRepository } from '../repository/route-repository';
 
 @Injectable()
 export class RouteServiceMongo implements IRouteDomainService {
-  constructor(private readonly repositori: IRouteRepository) {}
+  constructor(private readonly repositori: RouteRepository) {}
 
   createRoute(Route: RouteEntity): Observable<RouteEntity> {
     return this.repositori.createRoute(Route);
