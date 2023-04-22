@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Observable, from } from 'rxjs';
-import { AdminEntity } from '../../../../Domain/entities/admin.entity';
-import { LearnerEntity } from '../../../../Domain/entities/learner.entity';
+import { AdminEntity } from 'src/Domain/entities/admin.entity';
+import { LearnerEntity } from 'src/Domain/entities/learner.entity';
 import { Admin, AdminDocument } from '../schemas/admin.schema';
 import { Learner, LearnerDocument } from '../schemas/learner.schema';
 @Injectable()

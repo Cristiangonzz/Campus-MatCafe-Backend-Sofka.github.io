@@ -1,7 +1,7 @@
-import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
-import { IRoute } from 'express';
-import { ICourse } from '../../../../Domain';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { NotificationEntity } from '../../../../Domain/entities/notification.entity';
+import { Course } from './course.schema';
+import { Route } from './route.schema';
 
 export type AdminDocument = Admin & Document;
 
@@ -10,10 +10,10 @@ export type AdminDocument = Admin & Document;
 })
 export class Admin {
   @Prop({ type: [{ type: Object }] })
-  course?: ICourse[];
+  course?: Course[];
 
   @Prop({ type: [{ type: Object }] })
-  route?: IRoute[];
+  route?: Route[];
 
   @Prop({ type: [{ type: Object, ref: 'Notification' }] })
   notifications?: NotificationEntity[];

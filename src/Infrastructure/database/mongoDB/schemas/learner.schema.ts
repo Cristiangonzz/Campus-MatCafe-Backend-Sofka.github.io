@@ -4,7 +4,9 @@ import { RouteEntity } from '../../../../Domain/entities/route.entity';
 
 export type LearnerDocument = Learner & Document;
 
-@Schema()
+@Schema({
+  versionKey: false,
+})
 export class Learner {
   @Prop()
   calification: ICalification[];
@@ -12,16 +14,16 @@ export class Learner {
   @Prop()
   route: RouteEntity[];
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false, unique: true })
   firebaseId: string;
 
   @Prop({ required: true })
   name: string;
 
-  @Prop()
+  @Prop({ required: false })
   photoUrl: string;
 
   @Prop({ required: true })
