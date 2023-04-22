@@ -8,11 +8,11 @@ export class RouteEntity implements IRoute {
   adminId: string;
 
   constructor(
-    title: string,
-    description: string,
-    duration: string,
-    courses: ICourse[],
-    adminId: string,
+    title?: string,
+    description?: string,
+    duration?: string,
+    courses?: ICourse[],
+    adminId?: string,
   ) {
     this.title = title;
     this.description = description;
