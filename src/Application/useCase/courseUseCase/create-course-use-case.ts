@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { CourseEntity, ICourseDomainService } from '../../../Domain';
+import { CourseEntity } from 'src/Domain/entities';
+import { ICourseDomainService } from 'src/Domain/service';
 
 export class CreatecourseUseCase {
   constructor(public readonly CourseDomainService: ICourseDomainService) {}

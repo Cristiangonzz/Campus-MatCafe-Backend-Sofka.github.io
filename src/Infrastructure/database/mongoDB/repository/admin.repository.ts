@@ -1,21 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-<<<<<<< HEAD
-import { Observable, from } from 'rxjs';
-
-import { AdminEntity } from '../../../../Domain/entities/admin.entity';
-import { LearnerEntity } from '../../../../Domain/entities/learner.entity';
-
-=======
 import { Observable, from, map, switchMap } from 'rxjs';
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
 import { LearnerEntity } from 'src/Domain/entities/learner.entity';
->>>>>>> 7a86c765187255c41ea47b6f4cf6864b99809aae
 import { Admin, AdminDocument } from '../schemas/admin.schema';
 import { Learner, LearnerDocument } from '../schemas/learner.schema';
-import { CalificationEntity, ICalification } from '../../../../Domain';
-import { ObjectId } from 'mongodb';
+import { CalificationEntity } from 'src/Domain/entities';
 
 @Injectable()
 export class AdminRepository {

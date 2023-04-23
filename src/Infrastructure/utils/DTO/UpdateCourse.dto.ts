@@ -1,5 +1,5 @@
 import { IsString, IsArray, IsOptional } from 'class-validator';
-import { CourseEntity } from '../../../Domain';
+import { CourseEntity } from 'src/Domain/entities';
 
 export class UpdateCourseDto implements CourseEntity {
   @IsString()

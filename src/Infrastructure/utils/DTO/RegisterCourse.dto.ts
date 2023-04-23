@@ -1,5 +1,6 @@
 import { IsString, IsArray, IsNotEmpty } from 'class-validator';
-import { CourseEntity } from '../../../Domain';
+import { CourseEntity } from 'src/Domain/entities';
+
 
 export class RegisterCourseDto implements CourseEntity {
   @IsString()

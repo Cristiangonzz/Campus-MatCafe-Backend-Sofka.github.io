@@ -1,4 +1,5 @@
-import { ICourseDomainService, IUseCase } from '../..';
+import { ICourseDomainService } from 'src/Domain/service';
+import { IUseCase } from '../interface/use-case.interface';
 import {
   CreatecourseUseCase,
   DeletecourseUseCase,

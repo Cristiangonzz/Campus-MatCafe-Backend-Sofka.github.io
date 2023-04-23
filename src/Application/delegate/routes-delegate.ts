@@ -1,4 +1,5 @@
-import { IRouteDomainService, IUseCase } from '../..';
+import { IRouteDomainService } from 'src/Domain/service';
+import { IUseCase } from '../interface/use-case.interface';
 import {
   CreateRouteUseCase,
   DeleteRouteUseCase,

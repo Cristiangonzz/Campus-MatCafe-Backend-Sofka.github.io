@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { IRouteDomainService, RouteEntity } from '../../../../Domain';
 import { Observable } from 'rxjs';
 import { RouteRepository } from '../repository/route-repository';
+import { RouteEntity } from 'src/Domain/entities';
+import { IRouteDomainService } from 'src/Domain/service';
 
 @Injectable()
 export class RouteServiceMongo implements IRouteDomainService {

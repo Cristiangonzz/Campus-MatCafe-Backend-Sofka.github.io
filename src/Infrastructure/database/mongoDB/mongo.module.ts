@@ -1,10 +1,6 @@
 import { Module } from '@nestjs/common/decorators/modules/module.decorator';
 import { MongooseModule } from '@nestjs/mongoose';
-<<<<<<< HEAD
-
-=======
 import { AdminRepository } from './repository/admin.repository';
->>>>>>> 7a86c765187255c41ea47b6f4cf6864b99809aae
 import {
   Admin,
   AdminSchema,

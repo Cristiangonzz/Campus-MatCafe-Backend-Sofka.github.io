@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { ICourseDomainService, CourseEntity } from '../../../../Domain';
 import { CourseRepository } from '../repository/course-repository';
+import { ICourseDomainService } from 'src/Domain/service/course.service';
+import { CourseEntity } from 'src/Domain/entities';
 
 @Injectable()
 export class CourseServiceMongo implements ICourseDomainService {

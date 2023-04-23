@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { RouteEntity } from 'src/Domain';
+import { RouteEntity } from 'src/Domain/entities';
 import { RouteDelegate } from '../../Application';
 import { UpdateRouteDto } from '../utils/DTO/UpdateRoute.dto';
 import { RegisterRouteDto } from '../utils/DTO/RegisterRoute.dto';

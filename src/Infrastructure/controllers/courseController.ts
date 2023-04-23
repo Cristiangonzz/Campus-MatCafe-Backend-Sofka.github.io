@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { CourseEntity } from 'src/Domain';
+import { CourseEntity } from 'src/Domain/entities';
 import { CourseDelegate } from '../../Application';
 import { UpdateCourseDto } from '../utils/DTO/UpdateCourse.dto';
 import { RegisterCourseDto } from '../utils/DTO/RegisterCourse.dto';

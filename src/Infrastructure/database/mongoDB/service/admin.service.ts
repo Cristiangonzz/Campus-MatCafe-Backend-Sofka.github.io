@@ -4,7 +4,7 @@ import { LearnerEntity } from 'src/Domain/entities/Learner.entity';
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
 import { IAdminDomainService } from '../../../../Domain/service/admin.service';
 import { AdminRepository } from '../repository/admin.repository';
-import { CalificationEntity } from 'src/Domain';
+import { CalificationEntity } from 'src/Domain/entities';
 
 @Injectable()
 export class AdminMongoService implements IAdminDomainService {

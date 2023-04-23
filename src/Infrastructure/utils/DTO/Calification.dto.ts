@@ -1,4 +1,4 @@
-import { CalificationEntity } from '../../../Domain';
+import { CalificationEntity } from 'src/Domain/entities';
 
 export class CalificationDto implements CalificationEntity {
   grade?: number;

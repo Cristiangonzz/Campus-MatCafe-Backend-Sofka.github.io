@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Observable, catchError, from, map } from 'rxjs';
-import { CourseEntity } from '../../../../Domain';
 import { Course, CourseDocument } from '../schemas';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CourseEntity } from 'src/Domain/entities';
 import { ObjectId } from 'mongodb';
 
 @Injectable()
@@ -23,10 +23,10 @@ export class CourseRepository {
   }
 
   updateCourse(id: string, Course: CourseEntity): Observable<CourseEntity> {
-    const objectId = new ObjectId(id);
+    const objectid = new ObjectId(id);
     return from(
       this.CourseModule.findOneAndUpdate(
-        { _id: objectId },
+        { _id: objectid },
         { $set: Course },
         { new: true },
       ).exec(),
@@ -47,8 +47,8 @@ export class CourseRepository {
   }
 
   deleteCourse(CourseId: string): Observable<boolean> {
-    const objectId = new ObjectId(CourseId);
-    return from(this.CourseModule.deleteOne({ _id: objectId }).exec()).pipe(
+    const objectid = new ObjectId(CourseId);
+    return from(this.CourseModule.deleteOne({ _id: objectid }).exec()).pipe(
       map((result) => result.deletedCount > 0),
     );
   }

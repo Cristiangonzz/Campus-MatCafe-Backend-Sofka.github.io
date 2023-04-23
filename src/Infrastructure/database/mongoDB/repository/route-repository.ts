@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Observable, catchError, from, map } from 'rxjs';
-import { RouteEntity } from '../../../../Domain';
 import { Route, RouteDocument } from '../schemas';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ObjectId } from 'mongodb';
+import { RouteEntity } from 'src/Domain/entities';
 
 @Injectable()
 export class RouteRepository {
