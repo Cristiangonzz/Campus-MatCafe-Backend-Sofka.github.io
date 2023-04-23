@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { LearnerEntity } from '../../../Domain/entities/Learner.entity';
 import { IAdminDomainService } from '../../../Domain/service/admin.service';
 import { IUseCase } from '../../interface/use-case.interface';
+import { LearnerEntity } from 'src/Domain/entities';
 
 export class GetLearnerByEmailUseCase implements IUseCase {
   constructor(private readonly service: IAdminDomainService) {}
