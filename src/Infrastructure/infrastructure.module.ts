@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { RouteInfrastrucureService } from './service/route.infrastructure.service';
 import { MongoModule } from './database';
-import { CourseInfrastrucureService } from './service/Course.infrastructure.service';
 import { AdminService } from './service/admin.service';
+import { CourseInfrastrucureService } from './service';
 
 @Module({
   imports: [MongoModule],

@@ -12,7 +12,7 @@ import { CourseEntity } from 'src/Domain/entities';
 import { CourseDelegate } from '../../Application';
 import { UpdateCourseDto } from '../utils/DTO/UpdateCourse.dto';
 import { RegisterCourseDto } from '../utils/DTO/RegisterCourse.dto';
-import { CourseInfrastrucureService } from '../service/Course.infrastructure.service';
+import { CourseInfrastrucureService } from '../service';
 
 @Controller('Course')
 export class CourseController {
