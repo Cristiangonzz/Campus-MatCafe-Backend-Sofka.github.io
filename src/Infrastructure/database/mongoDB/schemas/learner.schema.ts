@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { ICalification } from '../../../../Domain';
-import { RouteEntity } from '../../../../Domain/entities/route.entity';
 
 export type LearnerDocument = Learner & Document;
 
@@ -15,7 +14,7 @@ export class Learner {
 
   @Prop()
   @ApiProperty()
-  route: RouteEntity[];
+  route: string[];
 
   @Prop({ required: true, unique: true })
   @ApiProperty()

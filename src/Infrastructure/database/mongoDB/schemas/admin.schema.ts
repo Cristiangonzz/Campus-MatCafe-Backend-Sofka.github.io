@@ -18,7 +18,7 @@ export class Admin {
   @ApiProperty()
   route?: Route[];
 
-  @Prop({ type: [{ type: Object, ref: 'Notification' }] })
+  @Prop({ type: [{ type: Object }] })
   @ApiProperty()
   notifications?: NotificationEntity[];
 

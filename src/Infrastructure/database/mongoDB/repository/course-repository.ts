@@ -1,23 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { Observable, catchError, from, map } from 'rxjs';
-import { Course, CourseDocument } from '../schemas';
+import { Observable, catchError, from, map, switchMap } from 'rxjs';
+import { AdminDocument, Course, CourseDocument } from '../schemas';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CourseEntity } from 'src/Domain/entities';
-import { ObjectId } from 'mongodb';
+import { Admin, ObjectId } from 'mongodb';
 
 @Injectable()
 export class CourseRepository {
   constructor(
+    @InjectModel(Admin.name)
+    private readonly adminRepository: Model<AdminDocument>,
     @InjectModel(Course.name)
     private readonly CourseModule: Model<CourseDocument>,
   ) {}
   createCourse(Course: CourseEntity): Observable<CourseEntity> {
-    return from(this.CourseModule.create(Course)).pipe(
-      map((doc) => doc.toJSON()),
-      catchError((error) => {
-        console.error('Error al crear la ruta:', error);
-        throw new Error('Error al crear la ruta');
+    return from(this.adminRepository.findById(Course.adminId)).pipe(
+      switchMap((admin: AdminDocument) => {
+        if (!admin) {
+          throw new Error(
+            `No se encontró un administrador con el ID ${Course.adminId}`,
+          );
+        }
+        return from(this.CourseModule.create(Course)).pipe(
+          map((doc) => doc.toJSON()),
+          catchError(() => {
+            throw new Error('Error al crear el curso');
+          }),
+        );
       }),
     );
   }
@@ -56,9 +66,8 @@ export class CourseRepository {
   getCourse(CourseId: string): Observable<CourseEntity> {
     return from(this.CourseModule.findById(CourseId)).pipe(
       map((doc) => doc?.toJSON()),
-      catchError((error) => {
-        console.error('Error al obtener la ruta:', error);
-        throw new Error('Error al obtener la ruta');
+      catchError(() => {
+        throw new Error('Error al obtener el curso');
       }),
     );
   }
@@ -79,7 +88,7 @@ export class CourseRepository {
         return Course;
       }),
       catchError(() => {
-        throw new Error('Error find user');
+        throw new Error('no se encotron cursos ');
       }),
     );
   }
