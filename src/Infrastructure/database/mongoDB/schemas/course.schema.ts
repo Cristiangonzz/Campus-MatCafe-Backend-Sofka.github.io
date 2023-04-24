@@ -6,7 +6,7 @@ export type CourseDocument = Course & Document;
 
 @Schema()
 export class Course {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   @ApiProperty()
   title: string;
 

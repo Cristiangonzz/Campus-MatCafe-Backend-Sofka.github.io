@@ -20,7 +20,7 @@ export class UpdateRouteDto implements RouteEntity {
   @IsOptional()
   @IsArray()
   @ApiProperty()
-  courses: ICourse[];
+  courses: string[];
   @IsString()
   @IsOptional()
   @ApiProperty()

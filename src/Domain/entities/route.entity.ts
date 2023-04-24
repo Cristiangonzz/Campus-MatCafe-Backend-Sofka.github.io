@@ -1,17 +1,17 @@
-import { ICourse, IRoute } from '..';
+import { IRoute } from '..';
 
 export class RouteEntity implements IRoute {
   title: string;
   description: string;
   duration: string;
-  courses: ICourse[];
+  courses: string[];
   adminId: string;
 
   constructor(
     title?: string,
     description?: string,
     duration?: string,
-    courses?: ICourse[],
+    courses?: string[],
     adminId?: string,
   ) {
     this.title = title;

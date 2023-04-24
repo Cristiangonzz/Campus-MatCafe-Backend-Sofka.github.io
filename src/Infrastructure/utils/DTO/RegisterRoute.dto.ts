@@ -1,5 +1,4 @@
 import { IsArray, IsNotEmpty, IsString } from 'class-validator';
-import { ICourse } from '../../../Domain';
 import { RouteEntity } from 'src/Domain/entities';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -19,7 +18,7 @@ export class RegisterRouteDto implements RouteEntity {
   @IsArray()
   @IsNotEmpty()
   @ApiProperty()
-  courses: ICourse[];
+  courses: string[];
   @IsString()
   @IsNotEmpty()
   @ApiProperty()

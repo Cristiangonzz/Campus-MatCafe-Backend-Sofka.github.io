@@ -9,7 +9,6 @@ import {
 } from '../useCase';
 import { Observable } from 'rxjs';
 
-
 export class RouteDelegate implements IUseCase {
   private delegate: IUseCase;
 

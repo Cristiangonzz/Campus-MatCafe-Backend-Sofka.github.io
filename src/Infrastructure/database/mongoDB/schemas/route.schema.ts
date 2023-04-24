@@ -7,7 +7,7 @@ export type RouteDocument = Route & Document;
 
 @Schema()
 export class Route {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   @ApiProperty()
   title: string;
 
@@ -19,9 +19,9 @@ export class Route {
   @ApiProperty()
   duration: string;
 
-  @Prop({ type: [CourseSchema], required: true })
+  @Prop({ required: true })
   @ApiProperty()
-  courses: Course[];
+  courses: string[];
 
   @Prop({ required: true })
   @ApiProperty()
