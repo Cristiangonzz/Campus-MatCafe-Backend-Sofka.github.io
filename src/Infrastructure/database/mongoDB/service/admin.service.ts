@@ -34,8 +34,6 @@ export class AdminMongoService implements IAdminDomainService {
   ): Observable<LearnerEntity> {
     return this.adminRepository.updateLearner(admin, Learner);
   }
-<<<<<<< HEAD
-=======
 
   gradeStudent(
     learnerId: string,
@@ -43,5 +41,4 @@ export class AdminMongoService implements IAdminDomainService {
   ): Observable<string> {
     return this.adminRepository.gradeStudent(learnerId, calification);
   }
->>>>>>> e49be27ea6e4a3947e41e960bdadf7d052427282
 }
