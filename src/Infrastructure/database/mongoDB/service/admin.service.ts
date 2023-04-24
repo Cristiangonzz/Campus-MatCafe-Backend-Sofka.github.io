@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { LearnerEntity } from 'src/Domain/entities/Learner.entity';
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
+import { LearnerEntity } from '../../../../Domain/entities/';
 import { CalificationEntity } from '../../../../Domain/entities/calification.entity';
 import { IAdminDomainService } from '../../../../Domain/service/admin.service';
 import { AdminRepository } from '../repository/admin.repository';
