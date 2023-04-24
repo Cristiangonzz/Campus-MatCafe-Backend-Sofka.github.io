@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 import { ICalification } from '../../../../Domain';
 import { RouteEntity } from '../../../../Domain/entities/route.entity';
-import { ApiProperty } from '@nestjs/swagger';
 
 export type LearnerDocument = Learner & Document;
 
@@ -21,9 +21,9 @@ export class Learner {
   @ApiProperty()
   email: string;
 
-  @Prop({ required: false, unique: true })
+  @Prop({ required: false, unique: true, sparse: true })
   @ApiProperty()
-  firebaseId: string;
+  firebaseId?: string;
 
   @Prop({ required: true })
   @ApiProperty()

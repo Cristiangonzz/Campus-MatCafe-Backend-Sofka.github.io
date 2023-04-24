@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 import { NotificationEntity } from '../../../../Domain/entities/notification.entity';
 import { Course } from './course.schema';
 import { Route } from './route.schema';
-import { ApiProperty } from '@nestjs/swagger';
 
 export type AdminDocument = Admin & Document;
 
@@ -26,7 +26,7 @@ export class Admin {
   @ApiProperty()
   email: string;
 
-  @Prop({ required: false, unique: true })
+  @Prop({ required: false, unique: true, sparse: true })
   @ApiProperty()
   firebaseId?: string;
 
