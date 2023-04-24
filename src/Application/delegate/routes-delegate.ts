@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { IRouteDomainService } from 'src/Domain/service';
 import { IUseCase } from '../interface/use-case.interface';
 import {
@@ -8,6 +7,7 @@ import {
   GetRouteByIdUseCase,
   UpdateRouteUseCase,
 } from '../useCase';
+import { Observable } from 'rxjs';
 
 export class RouteDelegate implements IUseCase {
   private delegate: IUseCase;

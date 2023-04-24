@@ -1,23 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { Observable, catchError, from, map, switchMap } from 'rxjs';
+import { AdminDocument, Route, RouteDocument } from '../schemas';
 import { InjectModel } from '@nestjs/mongoose';
-import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
-import { Observable, catchError, from, map } from 'rxjs';
-import { RouteEntity } from '../../../../Domain/entities/route.entity';
-import { Route, RouteDocument } from '../schemas/route.schema';
+import { Admin, ObjectId } from 'mongodb';
+import { RouteEntity } from 'src/Domain/entities';
 
 @Injectable()
 export class RouteRepository {
   constructor(
+    @InjectModel(Admin.name)
+    private readonly adminRepository: Model<AdminDocument>,
     @InjectModel(Route.name)
     private readonly RouteModule: Model<RouteDocument>,
   ) {}
   createRoute(Route: RouteEntity): Observable<RouteEntity> {
-    return from(this.RouteModule.create(Route)).pipe(
-      map((doc) => doc.toJSON()),
-      catchError((error) => {
-        console.error('Error al crear la ruta:', error);
-        throw new Error('Error al crear la ruta');
+    return from(this.adminRepository.findById(Route.adminId)).pipe(
+      switchMap((admin: AdminDocument) => {
+        if (!admin) {
+          throw new Error(
+            `No se encontró un administrador con el ID ${Route.adminId}`,
+          );
+        }
+
+        return from(this.RouteModule.create(Route)).pipe(
+          map((doc) => doc.toJSON()),
+          catchError((error) => {
+            console.error('Error al crear la ruta:', error);
+            throw new Error('Error al crear la ruta');
+          }),
+        );
       }),
     );
   }

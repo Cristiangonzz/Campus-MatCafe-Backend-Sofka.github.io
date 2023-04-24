@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs';
-import { ICourseDomainService } from '../../Domain/service/course.service';
+import { ICourseDomainService } from 'src/Domain/service';
 import { IUseCase } from '../interface/use-case.interface';
 import {
   CreatecourseUseCase,
@@ -8,6 +7,7 @@ import {
   GetCourseUseCase,
   UpdateCourseUseCase,
 } from '../useCase';
+import { Observable } from 'rxjs';
 
 export class CourseDelegate implements IUseCase {
   private delegate: IUseCase;

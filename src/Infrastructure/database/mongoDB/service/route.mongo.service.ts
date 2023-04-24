@@ -4,6 +4,7 @@ import { RouteEntity } from '../../../../Domain/entities/route.entity';
 import { IRouteDomainService } from '../../../../Domain/service/route.service';
 import { RouteRepository } from '../repository/route-repository';
 
+
 @Injectable()
 export class RouteServiceMongo implements IRouteDomainService {
   constructor(private readonly repository: RouteRepository) {}

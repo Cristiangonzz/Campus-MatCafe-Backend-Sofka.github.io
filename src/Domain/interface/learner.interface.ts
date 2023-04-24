@@ -4,5 +4,5 @@ import { IUser } from './user.interface';
 
 export interface ILearner extends IUser {
   calification: ICalification[];
-  route: IRoute[];
+  route: string[];
 }

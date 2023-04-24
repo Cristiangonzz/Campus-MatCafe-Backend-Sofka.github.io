@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 import { ICalification } from '../../../../Domain';
-import { RouteEntity } from '../../../../Domain/entities/route.entity';
 
 export type LearnerDocument = Learner & Document;
 
@@ -9,24 +9,31 @@ export type LearnerDocument = Learner & Document;
 })
 export class Learner {
   @Prop()
+  @ApiProperty()
   calification: ICalification[];
 
   @Prop()
-  route: RouteEntity[];
+  @ApiProperty()
+  route: string[];
 
   @Prop({ required: true, unique: true })
+  @ApiProperty()
   email: string;
 
-  @Prop({ required: false, unique: true })
-  firebaseId: string;
+  @Prop({ required: false, unique: true, sparse: true })
+  @ApiProperty()
+  firebaseId?: string;
 
   @Prop({ required: true })
+  @ApiProperty()
   name: string;
 
   @Prop({ required: false })
+  @ApiProperty()
   photoUrl: string;
 
   @Prop({ required: true })
+  @ApiProperty()
   rol: boolean;
 }
 

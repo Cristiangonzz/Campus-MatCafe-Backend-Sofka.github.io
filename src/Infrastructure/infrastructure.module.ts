@@ -3,8 +3,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MongoModule } from './database';
 import { CalificationPublisher } from './messaging/calification.publisher';
 import { AdminService } from './service/admin.service';
-import { CourseInfrastrucureService } from './service/course.infrastructure.service';
 import { RouteInfrastrucureService } from './service/route.infrastructure.service';
+import { CourseInfrastrucureService } from './service';
 
 @Module({
   imports: [
