@@ -87,7 +87,7 @@ export class AdminRepository {
         return from(user.save()).pipe(
           map(
             () =>
-              `Calificación actualizada para el usuario con ID: ${learnerId}`,
+              `Calificación actualizada curso ${calification.courseId} y su calificacion fue de ${calification.grade} `,
           ),
         );
       }),
