@@ -6,12 +6,9 @@ import { Observable, from, map, switchMap } from 'rxjs';
 
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
 import { LearnerEntity } from 'src/Domain/entities/learner.entity';
+import { CalificationEntity } from '../../../../Domain/entities/calification.entity';
 import { Admin, AdminDocument } from '../schemas/admin.schema';
 import { Learner, LearnerDocument } from '../schemas/learner.schema';
-
-import { CalificationEntity, ICalification } from '../../../../Domain';
-import { ObjectId } from 'mongodb';
-
 
 @Injectable()
 export class AdminRepository {

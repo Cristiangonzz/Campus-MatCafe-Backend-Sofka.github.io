@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Observable, catchError, from, map } from 'rxjs';
-import { CourseEntity } from '../../../../Domain';
-import { Course, CourseDocument } from '../schemas';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import { ObjectId } from 'mongodb';
+import { Model } from 'mongoose';
+import { Observable, catchError, from, map } from 'rxjs';
+import { CourseEntity } from '../../../../Domain/entities/course.entity';
+import { Course, CourseDocument } from '../schemas';
 
 @Injectable()
 export class CourseRepository {

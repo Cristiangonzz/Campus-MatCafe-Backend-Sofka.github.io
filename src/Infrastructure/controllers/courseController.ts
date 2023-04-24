@@ -8,11 +8,11 @@ import {
   Put,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { CourseEntity } from 'src/Domain';
 import { CourseDelegate } from '../../Application';
-import { UpdateCourseDto } from '../utils/DTO/UpdateCourse.dto';
-import { RegisterCourseDto } from '../utils/DTO/RegisterCourse.dto';
+import { CourseEntity } from '../../Domain/entities/course.entity';
 import { CourseInfrastrucureService } from '../service/Course.infrastructure.service';
+import { RegisterCourseDto } from '../utils/DTO/RegisterCourse.dto';
+import { UpdateCourseDto } from '../utils/DTO/UpdateCourse.dto';
 
 @Controller('Course')
 export class CourseController {
