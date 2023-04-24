@@ -6,10 +6,16 @@ import { InfrastructureModule } from './Infrastructure';
 import { AdminController } from './Infrastructure/controllers/admin.controller';
 import { CourseController } from './Infrastructure/controllers/courseController';
 import { MongoServerErrorExceptionFilter } from './Infrastructure/utils/exception-filters';
+import { LearnerController } from './Infrastructure/controllers/learner.controller';
 
 @Module({
   imports: [InfrastructureModule],
-  controllers: [AdminController, RouteController, CourseController],
+  controllers: [
+    AdminController,
+    RouteController,
+    CourseController,
+    LearnerController,
+  ],
   providers: [
     {
       provide: APP_FILTER,
