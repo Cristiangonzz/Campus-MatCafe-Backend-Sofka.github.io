@@ -5,25 +5,23 @@ import { AdminEntity } from '../../Domain/entities/admin.entity';
 import { LearnerEntity } from '../../Domain/entities/learner.entity';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserDto } from '../dto/user.dto';
+import { CalificationPublisher } from '../messaging/calification.publisher';
 import { AdminService } from '../service/admin.service';
 import { CalificationDto } from '../utils/DTO/Calification.dto';
 @Controller('')
 export class AdminController {
   private delegate: AdminDelegate;
-  constructor(private readonly adminService: AdminService) {
-    this.delegate = new AdminDelegate(adminService);
+  constructor(
+    private readonly adminService: AdminService,
+    private readonly calificationPublisher: CalificationPublisher,
+  ) {
+    this.delegate = new AdminDelegate(adminService, calificationPublisher);
   }
 
-  @Post('createAdmin')
-  createAdmin(@Body() admin: UserDto): Observable<AdminEntity> {
-    this.delegate.toCreateAdmin();
-    return this.delegate.execute(admin);
-  }
-
-  @Post('createLearner')
-  createLearner(@Body() learner: UserDto): Observable<LearnerEntity> {
-    this.delegate.toCreateLearner();
-    return this.delegate.execute(learner);
+  @Post('createUser')
+  createUser(@Body() user: UserDto): Observable<AdminEntity | LearnerEntity> {
+    user.rol ? this.delegate.toCreateAdmin() : this.delegate.toCreateLearner();
+    return this.delegate.execute(user);
   }
 
   @Put('updateAdmin/:email')
