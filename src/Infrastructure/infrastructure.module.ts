@@ -5,6 +5,7 @@ import { CalificationPublisher } from './messaging/calification.publisher';
 import { AdminService } from './service/admin.service';
 import { RouteInfrastrucureService } from './service/route.infrastructure.service';
 import { CourseInfrastrucureService } from './service';
+import { LearnerService } from './service/learner.service';
 
 @Module({
   imports: [
@@ -31,12 +32,13 @@ import { CourseInfrastrucureService } from './service';
     CourseInfrastrucureService,
     AdminService,
     CalificationPublisher,
+    LearnerService,
   ],
   exports: [
     CourseInfrastrucureService,
     RouteInfrastrucureService,
     AdminService,
-    CalificationPublisher,
+
   ],
 })
 export class InfrastructureModule {}
