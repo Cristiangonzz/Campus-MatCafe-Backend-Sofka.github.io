@@ -3,8 +3,7 @@ import { Observable } from 'rxjs';
 import { RouteEntity } from '../../../../Domain/entities/route.entity';
 import { IRouteDomainService } from '../../../../Domain/service/route.service';
 import { RouteRepository } from '../repository/route-repository';
-import { RouteEntity } from 'src/Domain/entities';
-import { IRouteDomainService } from 'src/Domain/service';
+
 
 @Injectable()
 export class RouteServiceMongo implements IRouteDomainService {
