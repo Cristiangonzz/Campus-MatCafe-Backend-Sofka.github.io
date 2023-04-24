@@ -1,5 +1,5 @@
-import { RouteServiceMongo } from '../database/mongoDB/service/route.mongo.service';
 import { Injectable } from '@nestjs/common';
+import { RouteServiceMongo } from '../database/mongoDB/service/route.mongo.service';
 
 @Injectable()
-export class RouteInfrastrucureService extends RouteServiceMongo {}
+export class RouteInfrastructureService extends RouteServiceMongo {}
