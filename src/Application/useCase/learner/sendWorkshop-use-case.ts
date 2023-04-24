@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { IUseCase } from '../../../Application/interface/use-case.interface';
+import { IUseCase } from '../../interface/use-case.interface';
 import { ILearnerDomainService } from '../../../Domain/service/learner.service';
 
 export class SendWorkshopUseCase implements IUseCase {
