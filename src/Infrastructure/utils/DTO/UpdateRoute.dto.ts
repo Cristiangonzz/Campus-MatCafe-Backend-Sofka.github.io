@@ -1,22 +1,28 @@
 import { IsArray, IsOptional, IsString } from 'class-validator';
-import { RouteEntity } from '../../../Domain/entities/route.entity';
-import { ICourse } from '../../../Domain/interface/course.interface';
+
+import { ApiProperty } from '@nestjs/swagger';
+import { RouteEntity } from 'src/Domain/entities';
 
 export class UpdateRouteDto implements RouteEntity {
   @IsString()
   @IsOptional()
+  @ApiProperty()
   title: string;
   @IsOptional()
   @IsString()
+  @ApiProperty()
   description: string;
   @IsString()
   @IsOptional()
+  @ApiProperty()
   duration: string;
   @IsString()
   @IsOptional()
   @IsArray()
-  courses: ICourse[];
+  @ApiProperty()
+  courses: string[];
   @IsString()
   @IsOptional()
+  @ApiProperty()
   adminId: string;
 }

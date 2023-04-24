@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { CalificationEntity } from '../../../Domain/entities/calification.entity';
-import { IAdminDomainService } from '../../../Domain/service/admin.service';
-import { IUseCase } from '../../interface/use-case.interface';
+import { IUseCase } from 'src/Application/interface/use-case.interface';
+import { CalificationEntity } from 'src/Domain/entities';
+import { IAdminDomainService } from 'src/Domain/service';
 
 export class GradeStudentUseCase implements IUseCase {
   constructor(private readonly service: IAdminDomainService) {}

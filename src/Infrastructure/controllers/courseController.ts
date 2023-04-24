@@ -8,12 +8,14 @@ import {
   Put,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
+import { CourseEntity } from 'src/Domain/entities';
 import { CourseDelegate } from '../../Application';
-import { CourseEntity } from '../../Domain/entities/course.entity';
-import { CourseInfrastrucureService } from '../service/course.infrastructure.service';
 import { RegisterCourseDto } from '../utils/DTO/RegisterCourse.dto';
-import { UpdateCourseDto } from '../utils/DTO/UpdateCourse.dto';
+import { CourseInfrastrucureService } from '../service';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { UpdateCourseDto } from '../utils';
 
+@ApiTags('course')
 @Controller('Course')
 export class CourseController {
   private readonly useCase: CourseDelegate;
@@ -21,12 +23,12 @@ export class CourseController {
   constructor(private readonly CourseService: CourseInfrastrucureService) {
     this.useCase = new CourseDelegate(this.CourseService);
   }
-
+  @ApiOperation({ summary: 'create  course' })
   @Post()
   createCourse(@Body() Course: RegisterCourseDto): Observable<CourseEntity> {
     return this.CourseService.createCourse(Course);
   }
-
+  @ApiOperation({ summary: 'update  course' })
   @Put(':id')
   updateCourse(
     @Param('id') id: string,
@@ -35,19 +37,19 @@ export class CourseController {
     this.useCase.updatecourse();
     return this.useCase.execute(id, Course);
   }
-
+  @ApiOperation({ summary: 'delete  course' })
   @Delete(':id')
   deleteCourse(@Param('id') id: string): Observable<boolean> {
     this.useCase.toDeletecourse();
     return this.useCase.execute(id);
   }
-
+  @ApiOperation({ summary: 'get one   course' })
   @Get(':id')
   getCourse(@Param('id') id: string): Observable<CourseEntity> {
     this.useCase.findById();
     return this.useCase.execute(id);
   }
-
+  @ApiOperation({ summary: 'get all course' })
   @Get()
   getAllCourses(): Observable<CourseEntity[]> {
     this.useCase.getAllCourse();

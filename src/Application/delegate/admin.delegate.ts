@@ -1,15 +1,13 @@
 import { Observable } from 'rxjs';
 import { IAdminDomainService } from 'src/Domain/service/admin.service';
 import { IUseCase } from '../interface/use-case.interface';
-import {
-  CreateAdminUseCase,
-  CreateLearnerUseCase,
-  GetAdminByEmailUseCase,
-  GetLearnerByEmailUseCase,
-  UpdateAdminUseCase,
-  UpdateLearnerUseCase,
-} from '../useCase/admin';
+import { CreateLearnerUseCase } from '../use-case/admin/create-learner.use-case';
+import { GetLearnerByEmailUseCase } from '../use-case/admin/get-learner.use-case';
+import { UpdateLearnerUseCase } from '../use-case/admin/update-learner.use-case';
+import { CreateAdminUseCase } from '../useCase/admin/create-admin.use-case';
+import { GetAdminByEmailUseCase } from '../useCase/admin/get-admin.use-case';
 import { GradeStudentUseCase } from '../useCase/admin/grade-student.use-case';
+import { UpdateAdminUseCase } from '../useCase/admin/update-admin.use-case';
 
 export class AdminDelegate implements IUseCase {
   private delegate: IUseCase;
