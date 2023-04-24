@@ -1,13 +1,13 @@
+import { Observable } from 'rxjs';
 import { ICourseDomainService } from 'src/Domain/service';
 import { IUseCase } from '../interface/use-case.interface';
 import {
-  CreatecourseUseCase,
-  DeletecourseUseCase,
+  CreateCourseUseCase,
+  DeleteCourseUseCase,
   GetAllCourseUseCase,
   GetCourseUseCase,
   UpdateCourseUseCase,
 } from '../useCase';
-import { Observable } from 'rxjs';
 
 export class CourseDelegate implements IUseCase {
   private delegate: IUseCase;
@@ -18,19 +18,19 @@ export class CourseDelegate implements IUseCase {
     return this.delegate.execute(...args);
   }
 
-  toDeletecourse(): void {
-    this.delegate = new DeletecourseUseCase(this.courseService);
+  toDeleteCourse(): void {
+    this.delegate = new DeleteCourseUseCase(this.courseService);
   }
 
-  toCreatecourse(): void {
-    this.delegate = new CreatecourseUseCase(this.courseService);
+  toCreateCourse(): void {
+    this.delegate = new CreateCourseUseCase(this.courseService);
   }
 
   findById(): void {
     this.delegate = new GetCourseUseCase(this.courseService);
   }
 
-  updatecourse(): void {
+  updateCourse(): void {
     this.delegate = new UpdateCourseUseCase(this.courseService);
   }
 
