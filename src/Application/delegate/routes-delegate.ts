@@ -13,6 +13,7 @@ export class RouteDelegate implements IUseCase {
 
   constructor(private readonly RouteService: IRouteDomainService) {}
 
+  
   execute<Response>(...args: any[]): Observable<Response> {
     return this.delegate.execute(...args);
   }
