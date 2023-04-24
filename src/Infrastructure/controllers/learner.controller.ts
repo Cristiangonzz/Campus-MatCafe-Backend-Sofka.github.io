@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LearnerDelegate } from 'src/Application/delegate/learner.delegate';
 import { LearnerService } from '../service/learner.service';
 import { Observable } from 'rxjs';
@@ -13,19 +13,26 @@ export class LearnerController {
   constructor(private readonly learnerService: LearnerService) {
     this.delegate = new LearnerDelegate(learnerService);
   }
+  @ApiOperation({ summary: 'send workshop' })
   @Post('sendWorkshop')
   sendWorkshop(@Body() sendWorkshop: SendWorkshopDto): Observable<string> {
-    return this.learnerService.sendWorkshop(
+    this.delegate.tosendWorkshop();
+
+    return this.delegate.execute(
       sendWorkshop.learnedId,
       sendWorkshop.github,
       sendWorkshop.courseid,
+      sendWorkshop.coment,
     );
   }
+  @ApiOperation({ summary: 'subscribe route' })
   @Post('subscribeRoute')
   subscribeRoute(
     @Body() subscribeRoute: SubscribeRouteDto,
   ): Observable<string> {
-    return this.learnerService.subscribeRoute(
+    this.delegate.toSubscribeRoute();
+
+    return this.delegate.execute(
       subscribeRoute.learnedId,
       subscribeRoute.routeid,
     );

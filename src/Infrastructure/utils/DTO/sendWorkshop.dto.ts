@@ -14,4 +14,8 @@ export class SendWorkshopDto {
   @IsNotEmpty()
   @ApiProperty()
   courseid: string;
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  coment: string;
 }

@@ -11,8 +11,14 @@ export class LearnerMongoService implements ILearnerDomainService {
     learnedId: string,
     github: string,
     courseid: string,
+    coment: string,
   ): Observable<string> {
-    return this.learnerRepository.sendWorkshop(learnedId, github, courseid);
+    return this.learnerRepository.sendWorkshop(
+      learnedId,
+      github,
+      courseid,
+      coment,
+    );
   }
   subscribeRoute(learnerId, idRoute: string): Observable<string> {
     return this.learnerRepository.subscribeRoute(learnerId, idRoute);

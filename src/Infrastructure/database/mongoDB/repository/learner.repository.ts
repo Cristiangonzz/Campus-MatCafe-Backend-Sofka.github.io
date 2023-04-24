@@ -25,7 +25,12 @@ export class LearnerRepository {
     private readonly RouteModule: Model<RouteDocument>,
   ) {}
 
-  sendWorkshop(id: string, repo: string, course: string): Observable<string> {
+  sendWorkshop(
+    id: string,
+    repo: string,
+    course: string,
+    coment: string,
+  ): Observable<string> {
     return from(this.CourseModule.findById(course)).pipe(
       mergeMap((cours) => {
         const adminId = cours.adminId;
@@ -40,7 +45,7 @@ export class LearnerRepository {
             );
 
             if (!notificationExists) {
-              admin.notifications.push({ id, repo, course });
+              admin.notifications.push({ id, repo, course, coment });
             }
 
             return from(admin.save()).pipe(
