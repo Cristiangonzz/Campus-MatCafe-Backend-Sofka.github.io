@@ -38,7 +38,8 @@ import { LearnerService } from './service/learner.service';
     CourseInfrastrucureService,
     RouteInfrastrucureService,
     AdminService,
-
+    CalificationPublisher,
+    LearnerService,
   ],
 })
 export class InfrastructureModule {}
