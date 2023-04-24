@@ -37,6 +37,8 @@ import { RouteInfrastructureService } from './service/route.infrastructure.servi
   exports: [
     CourseInfrastructureService,
     RouteInfrastructureService,
+    CalificationPublisher,
+    LearnerService,
     AdminService,
   ],
 })
