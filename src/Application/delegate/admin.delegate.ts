@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { CalificationEventPublisher } from 'src/Domain/events';
 import { IAdminDomainService } from 'src/Domain/service/admin.service';
 import { IUseCase } from '../interface/use-case.interface';
 
@@ -13,7 +14,10 @@ import { UpdateLearnerUseCase } from '../useCase/admin/update-learner.use-case';
 export class AdminDelegate implements IUseCase {
   private delegate: IUseCase;
 
-  constructor(private readonly service: IAdminDomainService) {}
+  constructor(
+    private readonly service: IAdminDomainService,
+    private readonly publish: CalificationEventPublisher,
+  ) {}
 
   execute<Response>(...args: any[]): Observable<Response> {
     return this.delegate.execute(...args);
@@ -44,6 +48,6 @@ export class AdminDelegate implements IUseCase {
   }
 
   toGradeStudent(): void {
-    this.delegate = new GradeStudentUseCase(this.service);
+    this.delegate = new GradeStudentUseCase(this.service, this.publish);
   }
 }

@@ -1,33 +1,33 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { AdminDelegate } from '../../Application/delegate/admin.delegate';
 import { AdminEntity } from '../../Domain/entities/admin.entity';
 import { LearnerEntity } from '../../Domain/entities/learner.entity';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserDto } from '../dto/user.dto';
+import { CalificationPublisher } from '../messaging/calification.publisher';
 import { AdminService } from '../service/admin.service';
 import { CalificationDto } from '../utils/DTO/Calification.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Admin')
 @Controller('')
 export class AdminController {
   private delegate: AdminDelegate;
-  constructor(private readonly adminService: AdminService) {
-    this.delegate = new AdminDelegate(adminService);
+  constructor(
+    private readonly adminService: AdminService,
+    private readonly calificationPublisher: CalificationPublisher,
+  ) {
+    this.delegate = new AdminDelegate(adminService, calificationPublisher);
   }
-  @ApiOperation({ summary: 'create  Admin' })
-  @Post('createAdmin')
-  createAdmin(@Body() admin: UserDto): Observable<AdminEntity> {
-    this.delegate.toCreateAdmin();
-    return this.delegate.execute(admin);
+
+  @ApiOperation({ summary: 'Create USer' })
+  @Post('createUser')
+  createUser(@Body() user: UserDto): Observable<AdminEntity | LearnerEntity> {
+    user.rol ? this.delegate.toCreateAdmin() : this.delegate.toCreateLearner();
+    return this.delegate.execute(user);
   }
-  @ApiOperation({ summary: 'create  Learner' })
-  @Post('createLearner')
-  createLearner(@Body() learner: UserDto): Observable<LearnerEntity> {
-    this.delegate.toCreateLearner();
-    return this.delegate.execute(learner);
-  }
+
   @ApiOperation({ summary: 'update  Admin' })
   @Put('updateAdmin/:email')
   updateAdmin(
