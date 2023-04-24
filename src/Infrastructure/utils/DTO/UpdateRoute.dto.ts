@@ -1,5 +1,6 @@
 import { IsArray, IsOptional, IsString } from 'class-validator';
-import { ICourse, RouteEntity } from '../../../Domain';
+import { RouteEntity } from '../../../Domain/entities/route.entity';
+import { ICourse } from '../../../Domain/interface/course.interface';
 
 export class UpdateRouteDto implements RouteEntity {
   @IsString()

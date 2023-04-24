@@ -8,11 +8,11 @@ import {
   Put,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { RouteEntity } from 'src/Domain';
 import { RouteDelegate } from '../../Application';
-import { UpdateRouteDto } from '../utils/DTO/UpdateRoute.dto';
-import { RegisterRouteDto } from '../utils/DTO/RegisterRoute.dto';
+import { RouteEntity } from '../../Domain/entities/route.entity';
 import { RouteInfrastrucureService } from '../service/route.infrastructure.service';
+import { RegisterRouteDto } from '../utils/DTO/RegisterRoute.dto';
+import { UpdateRouteDto } from '../utils/DTO/UpdateRoute.dto';
 
 @Controller('Route')
 export class RouteController {
