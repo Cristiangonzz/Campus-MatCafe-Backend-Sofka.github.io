@@ -8,7 +8,8 @@ export class SendWorkshopUseCase implements IUseCase {
     learnedId: string,
     github: string,
     courseid: string,
+    coment: string,
   ): Observable<string> {
-    return this.service.sendWorkshop(learnedId, github, courseid);
+    return this.service.sendWorkshop(learnedId, github, courseid, coment);
   }
 }

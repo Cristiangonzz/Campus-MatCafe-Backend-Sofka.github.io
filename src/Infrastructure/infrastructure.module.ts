@@ -4,6 +4,7 @@ import { MongoModule } from './database';
 import { CalificationPublisher } from './messaging/calification.publisher';
 import { CourseInfrastructureService } from './service';
 import { AdminService } from './service/admin.service';
+import { LearnerService } from './service/learner.service';
 import { RouteInfrastructureService } from './service/route.infrastructure.service';
 
 @Module({
@@ -31,12 +32,12 @@ import { RouteInfrastructureService } from './service/route.infrastructure.servi
     CourseInfrastructureService,
     AdminService,
     CalificationPublisher,
+    LearnerService,
   ],
   exports: [
     CourseInfrastructureService,
     RouteInfrastructureService,
     AdminService,
-    CalificationPublisher,
   ],
 })
 export class InfrastructureModule {}

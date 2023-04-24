@@ -4,6 +4,7 @@ export interface ILearnerDomainService {
     learnedId: string,
     github: string,
     courseid: string,
+    coment: string,
   ): Observable<string>;
   subscribeRoute(learnerId: string, idRoute: string): Observable<string>;
 }

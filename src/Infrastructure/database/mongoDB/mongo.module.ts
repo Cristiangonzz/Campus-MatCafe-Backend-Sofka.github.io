@@ -16,6 +16,8 @@ import { CourseRepository } from './repository/course-repository';
 import { RouteRepository } from './repository/route-repository';
 import { CourseServiceMongo } from './service/course.mongo.service';
 import { RouteServiceMongo } from './service/route.mongo.service';
+import { LearnerMongoService } from './service/Learner.mongo.service';
+import { LearnerRepository } from './repository/learner.repository';
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { RouteServiceMongo } from './service/route.mongo.service';
     RouteRepository,
     CourseServiceMongo,
     RouteServiceMongo,
+    LearnerMongoService,
+    LearnerRepository,
   ],
   exports: [
     AdminMongoService,
@@ -49,6 +53,8 @@ import { RouteServiceMongo } from './service/route.mongo.service';
     RouteRepository,
     CourseServiceMongo,
     RouteServiceMongo,
+    LearnerMongoService,
+    LearnerRepository,
   ],
 })
 export class MongoModule {}
