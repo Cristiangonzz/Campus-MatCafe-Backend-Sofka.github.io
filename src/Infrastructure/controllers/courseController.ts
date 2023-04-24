@@ -10,7 +10,7 @@ import {
 import { Observable } from 'rxjs';
 import { CourseDelegate } from '../../Application';
 import { CourseEntity } from '../../Domain/entities/course.entity';
-import { CourseInfrastrucureService } from '../service/Course.infrastructure.service';
+import { CourseInfrastrucureService } from '../service/course.infrastructure.service';
 import { RegisterCourseDto } from '../utils/DTO/RegisterCourse.dto';
 import { UpdateCourseDto } from '../utils/DTO/UpdateCourse.dto';
 
