@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Observable, catchError, from, map, switchMap } from 'rxjs';
+import { Observable, catchError, concatMap, from, map, switchMap } from 'rxjs';
 import {
   AdminDocument,
   Course,
@@ -22,9 +22,10 @@ export class RouteRepository {
     @InjectModel(Course.name)
     private readonly CourseModule: Model<CourseDocument>,
   ) {}
+
   createRoute(route: RouteEntity): Observable<RouteEntity> {
     return from(this.adminRepository.findById(route.adminId)).pipe(
-      switchMap((admin: AdminDocument) => {
+      concatMap((admin: AdminDocument) => {
         if (!admin) {
           throw new Error(
             `No se encontró un administrador con el ID ${route.adminId}`,
@@ -49,15 +50,47 @@ export class RouteRepository {
               );
             }
 
-            return from(this.RouteModule.create(route)).pipe(
-              map((doc) => doc.toJSON() as RouteEntity),
-              catchError((error) => {
-                console.error('Error al crear la ruta:', error);
-                throw new Error('Error al crear la ruta');
+            return from(this.addRouteToAdmin(route.adminId, route.title)).pipe(
+              catchError(() => {
+                throw new Error('Error al agregar la ruta al administrador');
+              }),
+              switchMap(() => {
+                return from(this.RouteModule.create(route)).pipe(
+                  map((doc) => doc.toJSON() as RouteEntity),
+                  catchError((error) => {
+                    console.error('Error al crear la ruta:', error);
+                    throw new Error('Error al crear la ruta');
+                  }),
+                );
               }),
             );
           }),
         );
+      }),
+    );
+  }
+
+  addRouteToAdmin(adminId, routeTitle): Observable<string> {
+    return from(
+      this.adminRepository.findByIdAndUpdate(
+        adminId,
+        { $addToSet: { route: routeTitle } },
+        { new: true },
+      ),
+    ).pipe(
+      map((updatedAdmin: AdminDocument) => {
+        if (updatedAdmin.route.includes(routeTitle)) {
+          return `El título de ruta '${routeTitle}' ya existe en el administrador con ID ${adminId}`;
+        } else {
+          return `El título de ruta '${routeTitle}' fue agregado al administrador con ID ${adminId}`;
+        }
+      }),
+      catchError((error) => {
+        console.error(
+          'Error al actualizar las rutas del administrador:',
+          error,
+        );
+        throw new Error('Error al actualizar las rutas del administrador');
       }),
     );
   }
