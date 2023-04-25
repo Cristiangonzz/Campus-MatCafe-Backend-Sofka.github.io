@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MongoModule } from './database';
 import { CalificationPublisher } from './messaging/calification.publisher';
+import { CourseInfrastructureService } from './service';
 import { AdminService } from './service/admin.service';
-import { RouteInfrastrucureService } from './service/route.infrastructure.service';
-import { CourseInfrastrucureService } from './service';
 import { LearnerService } from './service/learner.service';
+import { RouteInfrastructureService } from './service/route.infrastructure.service';
 
 @Module({
   imports: [
@@ -28,18 +28,21 @@ import { LearnerService } from './service/learner.service';
   ],
   controllers: [],
   providers: [
-    RouteInfrastrucureService,
-    CourseInfrastrucureService,
+    RouteInfrastructureService,
+    CourseInfrastructureService,
     AdminService,
     CalificationPublisher,
     LearnerService,
   ],
   exports: [
-    CourseInfrastrucureService,
-    RouteInfrastrucureService,
+    CourseInfrastructureService,
+    RouteInfrastructureService,
+    CalificationPublisher,
+    LearnerService,
     AdminService,
     CalificationPublisher,
     LearnerService,
+
   ],
 })
 export class InfrastructureModule {}

@@ -21,5 +21,6 @@
   "peacock.color": "#000000",
   "[typescript]": {
     "editor.tabSize": 2
-  }
+  },
+  "cSpell.words": ["amqps", "kcbgbwco"]
 }

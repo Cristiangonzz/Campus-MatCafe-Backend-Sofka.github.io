@@ -7,11 +7,11 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { RouteDelegate } from '../../Application';
 import { RouteEntity } from '../../Domain/entities/route.entity';
-import { RouteInfrastrucureService } from '../service/route.infrastructure.service';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { RouteInfrastructureService } from '../service/route.infrastructure.service';
 import { RegisterRouteDto, UpdateRouteDto } from '../utils';
 
 @ApiTags('route')
@@ -19,7 +19,7 @@ import { RegisterRouteDto, UpdateRouteDto } from '../utils';
 export class RouteController {
   private readonly useCase: RouteDelegate;
 
-  constructor(private readonly routeService: RouteInfrastrucureService) {
+  constructor(private readonly routeService: RouteInfrastructureService) {
     this.useCase = new RouteDelegate(this.routeService);
   }
   @ApiOperation({ summary: 'create  route' })

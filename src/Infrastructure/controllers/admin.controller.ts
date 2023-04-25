@@ -21,7 +21,7 @@ export class AdminController {
     this.delegate = new AdminDelegate(adminService, calificationPublisher);
   }
 
-  @ApiOperation({ summary: 'Create USer' })
+  @ApiOperation({ summary: 'Create User' })
   @Post('createUser')
   createUser(@Body() user: UserDto): Observable<AdminEntity | LearnerEntity> {
     user.rol ? this.delegate.toCreateAdmin() : this.delegate.toCreateLearner();
