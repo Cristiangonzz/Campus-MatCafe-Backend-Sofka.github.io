@@ -27,6 +27,7 @@ export class RegisterCourseDto implements CourseEntity {
   @MinLength(5)
   duration: string;
 
+  
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
