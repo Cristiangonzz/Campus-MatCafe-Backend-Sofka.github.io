@@ -27,19 +27,51 @@ export class AdminRepository {
   ) {}
 
   createAdmin(admin: AdminEntity): Observable<AdminEntity> {
-    return from(this.adminRepository.create(admin));
+    return this.getLernerByEmail(admin.email).pipe(
+      switchMap((learner) => {
+        if (learner) {
+          throw new Error(`Se encontró estudiante con el mail: ${admin.email}`);
+        }
+        return from(this.adminRepository.create(admin));
+      }),
+    );
   }
 
   getAdminByEmail(email: string): Observable<AdminEntity> {
-    return from(this.adminRepository.findOne({ email }));
+    return from(this.adminRepository.findOne({ email })).pipe(
+      map((admin) => {
+        if (!admin) {
+          throw new Error(
+            `No se encontró administrador con correo electrónico: ${email}`,
+          );
+        }
+        return admin;
+      }),
+    );
   }
 
   createLerner(learner: LearnerEntity): Observable<LearnerEntity> {
-    return from(this.learnerRepository.create(learner));
+    return this.getAdminByEmail(learner.email).pipe(
+      switchMap((learner) => {
+        if (learner) {
+          throw new Error(`Se encontró admin con el mail: ${learner.email}`);
+        }
+        return from(this.learnerRepository.create(learner));
+      }),
+    );
   }
 
   getLernerByEmail(email: string): Observable<LearnerEntity> {
-    return from(this.learnerRepository.findOne({ email }).exec());
+    return from(this.learnerRepository.findOne({ email })).pipe(
+      map((learner) => {
+        if (!learner) {
+          throw new Error(
+            `No se encontró aprendiz con correo electrónico: ${email}`,
+          );
+        }
+        return learner;
+      }),
+    );
   }
 
   updateAdmin(email: string, admin: AdminEntity): Observable<AdminEntity> {
