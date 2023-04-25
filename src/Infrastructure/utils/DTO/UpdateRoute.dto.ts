@@ -28,7 +28,6 @@ export class UpdateRouteDto implements RouteEntity {
   @MinLength(5)
   @ApiProperty()
   duration: string;
-  @IsString()
   @IsOptional()
   @IsArray()
   @ApiProperty()
