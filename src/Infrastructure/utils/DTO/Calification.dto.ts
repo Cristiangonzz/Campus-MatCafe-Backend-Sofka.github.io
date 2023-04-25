@@ -7,6 +7,7 @@ import {
   IsInt,
   Max,
   Min,
+  Matches,
 } from 'class-validator';
 import { CalificationEntity } from 'src/Domain/entities';
 
@@ -21,6 +22,7 @@ export class CalificationDto implements CalificationEntity {
   @IsNotEmpty()
   @MinLength(5)
   @ApiProperty()
+  @Matches(/^[A-Za-zñÑ\s\d]+$/)
   comment?: string;
   @IsString()
   @IsNotEmpty()

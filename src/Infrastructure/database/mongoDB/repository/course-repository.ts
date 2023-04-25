@@ -93,13 +93,17 @@ export class CourseRepository {
 
   getCourse(CourseId: string): Observable<CourseEntity> {
     return from(this.CourseModule.findById(CourseId)).pipe(
-      map((doc) => doc?.toJSON()),
+      map((doc) => {
+        if (!doc) {
+          throw new Error('El curso  no existe');
+        }
+        return doc.toJSON();
+      }),
       catchError(() => {
         throw new Error('Error al obtener el curso');
       }),
     );
   }
-
   getAllCourses(): Observable<CourseEntity[]> {
     return from(this.CourseModule.find().exec()).pipe(
       map((CourseDocuments: CourseDocument[]) => {
