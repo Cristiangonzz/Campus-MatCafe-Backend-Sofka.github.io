@@ -1,7 +1,9 @@
-import { Observable, from, map, mergeAll, mergeMap, of, switchMap } from 'rxjs';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Admin } from 'mongodb';
 import { Model } from 'mongoose';
+import { Observable, from, map, mergeAll, mergeMap, of, switchMap } from 'rxjs';
+import { CalificationEntity } from 'src/Domain/entities';
 import {
   AdminDocument,
   Course,
@@ -11,7 +13,10 @@ import {
   Route,
   RouteDocument,
 } from '../schemas';
-import { Injectable } from '@nestjs/common';
+import {
+  Calification,
+  CalificationDocument,
+} from '../schemas/calification.schema';
 @Injectable()
 export class LearnerRepository {
   constructor(
@@ -23,6 +28,8 @@ export class LearnerRepository {
     private readonly CourseModule: Model<CourseDocument>,
     @InjectModel(Route.name)
     private readonly RouteModule: Model<RouteDocument>,
+    @InjectModel(Calification.name)
+    private readonly calificationRepository: Model<CalificationDocument>,
   ) {}
 
   sendWorkshop(
@@ -78,6 +85,21 @@ export class LearnerRepository {
         );
       }),
       mergeAll(),
+    );
+  }
+
+  saveCalification(
+    garde: number,
+    comment: string,
+    courseId: string,
+  ): Observable<CalificationEntity> {
+    console.log('saveCalification', garde, comment, courseId);
+    return from(
+      this.calificationRepository.create({
+        garde,
+        comment,
+        courseId,
+      }),
     );
   }
 }

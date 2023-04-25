@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
-import { LearnerEntity } from '../../../../Domain/entities/';
+import {
+  LearnerEntity,
+  NotificationEntity,
+} from '../../../../Domain/entities/';
 import { CalificationEntity } from '../../../../Domain/entities/calification.entity';
 import { IAdminDomainService } from '../../../../Domain/service/admin.service';
 import { AdminRepository } from '../repository/admin.repository';
@@ -39,5 +42,12 @@ export class AdminMongoService implements IAdminDomainService {
     calification: CalificationEntity,
   ): Observable<string> {
     return this.adminRepository.gradeStudent(learnerId, calification);
+  }
+
+  saveNotification(
+    learnerId: string,
+    notification: NotificationEntity,
+  ): Observable<NotificationEntity> {
+    return this.adminRepository.saveNotification(learnerId, notification);
   }
 }

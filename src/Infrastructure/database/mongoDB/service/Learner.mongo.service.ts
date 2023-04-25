@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { CalificationEntity } from 'src/Domain/entities';
 import { ILearnerDomainService } from 'src/Domain/service/learner.service';
 import { LearnerRepository } from '../repository/learner.repository';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class LearnerMongoService implements ILearnerDomainService {
@@ -22,5 +23,13 @@ export class LearnerMongoService implements ILearnerDomainService {
   }
   subscribeRoute(learnerId, idRoute: string): Observable<string> {
     return this.learnerRepository.subscribeRoute(learnerId, idRoute);
+  }
+
+  saveCalification(
+    grade: number,
+    comment: string,
+    courseId: string,
+  ): Observable<CalificationEntity> {
+    return this.learnerRepository.saveCalification(grade, courseId, comment);
   }
 }
