@@ -6,6 +6,7 @@ export class RouteEntity implements IRoute {
   duration: string;
   courses: string[];
   adminId: string;
+  id?: string;
 
   constructor(
     title?: string,
