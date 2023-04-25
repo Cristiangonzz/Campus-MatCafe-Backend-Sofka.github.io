@@ -1,11 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, MinLength, IsString, IsMongoId } from 'class-validator';
+import {
+  IsNotEmpty,
+  MinLength,
+  IsString,
+  IsMongoId,
+  IsInt,
+  Max,
+  Min,
+} from 'class-validator';
 import { CalificationEntity } from 'src/Domain/entities';
 
 export class CalificationDto implements CalificationEntity {
   @ApiProperty()
+  @IsInt()
   @IsNotEmpty()
-  @MinLength(1)
+  @Min(0)
+  @Max(12)
   grade?: number;
   @IsString()
   @IsNotEmpty()
