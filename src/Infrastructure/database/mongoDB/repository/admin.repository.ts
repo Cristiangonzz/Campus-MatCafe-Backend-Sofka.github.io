@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { Observable, from, map, switchMap } from 'rxjs';
+import { Observable, forkJoin, from, map, switchMap } from 'rxjs';
 
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
 import { LearnerEntity } from 'src/Domain/entities/learner.entity';
@@ -89,6 +89,27 @@ export class AdminRepository {
             () =>
               `Calificación actualizada curso ${calification.courseId} y su calificacion fue de ${calification.grade} `,
           ),
+        );
+      }),
+    );
+  }
+
+  getAdminAndLearnerEmail(
+    email: string,
+  ): Observable<AdminEntity | LearnerEntity> {
+    const admin$ = from(this.adminRepository.findOne({ email }));
+    const learner$ = from(this.learnerRepository.findOne({ email }));
+
+    return forkJoin([admin$, learner$]).pipe(
+      map(([admin, learner]) => {
+        if (admin) {
+          return admin as AdminEntity;
+        }
+        if (learner) {
+          return learner as LearnerEntity;
+        }
+        throw new Error(
+          `No se encontró ni un administrador ni un estudiante con los IDs proporcionados: ${email}, ${email}`,
         );
       }),
     );

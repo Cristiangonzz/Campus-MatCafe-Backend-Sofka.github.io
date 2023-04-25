@@ -40,4 +40,9 @@ export class AdminMongoService implements IAdminDomainService {
   ): Observable<string> {
     return this.adminRepository.gradeStudent(learnerId, calification);
   }
+  getAdminAndLearnerEmail(
+    email: string,
+  ): Observable<AdminEntity | LearnerEntity> {
+    return this.adminRepository.getAdminAndLearnerEmail(email);
+  }
 }
