@@ -120,9 +120,13 @@ export class RouteRepository {
 
   getRoute(RouteId: string): Observable<RouteEntity> {
     return from(this.RouteModule.findById(RouteId)).pipe(
-      map((doc) => doc?.toJSON()),
-      catchError((error) => {
-        console.error('Error al obtener la ruta:', error);
+      map((doc) => {
+        if (!doc) {
+          throw new Error('La ruta no existe');
+        }
+        return doc.toJSON();
+      }),
+      catchError(() => {
         throw new Error('Error al obtener la ruta');
       }),
     );
