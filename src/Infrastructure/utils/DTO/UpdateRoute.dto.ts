@@ -1,4 +1,10 @@
-import { IsArray, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsMongoId,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { RouteEntity } from 'src/Domain/entities';
@@ -6,6 +12,7 @@ import { RouteEntity } from 'src/Domain/entities';
 export class UpdateRouteDto implements RouteEntity {
   @IsString()
   @IsOptional()
+  @MinLength(5)
   @ApiProperty()
   title: string;
   @IsOptional()
@@ -14,6 +21,7 @@ export class UpdateRouteDto implements RouteEntity {
   description: string;
   @IsString()
   @IsOptional()
+  @MinLength(5)
   @ApiProperty()
   duration: string;
   @IsString()
@@ -24,5 +32,6 @@ export class UpdateRouteDto implements RouteEntity {
   @IsString()
   @IsOptional()
   @ApiProperty()
+  @IsMongoId()
   adminId: string;
 }
