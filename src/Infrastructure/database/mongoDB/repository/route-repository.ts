@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Observable, catchError, from, map, switchMap } from 'rxjs';
-import { AdminDocument, Route, RouteDocument } from '../schemas';
+import {
+  AdminDocument,
+  Course,
+  CourseDocument,
+  Route,
+  RouteDocument,
+} from '../schemas';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Admin, ObjectId } from 'mongodb';
@@ -13,21 +19,43 @@ export class RouteRepository {
     private readonly adminRepository: Model<AdminDocument>,
     @InjectModel(Route.name)
     private readonly RouteModule: Model<RouteDocument>,
+    @InjectModel(Course.name)
+    private readonly CourseModule: Model<CourseDocument>,
   ) {}
-  createRoute(Route: RouteEntity): Observable<RouteEntity> {
-    return from(this.adminRepository.findById(Route.adminId)).pipe(
+  createRoute(route: RouteEntity): Observable<RouteEntity> {
+    return from(this.adminRepository.findById(route.adminId)).pipe(
       switchMap((admin: AdminDocument) => {
         if (!admin) {
           throw new Error(
-            `No se encontró un administrador con el ID ${Route.adminId}`,
+            `No se encontró un administrador con el ID ${route.adminId}`,
           );
         }
 
-        return from(this.RouteModule.create(Route)).pipe(
-          map((doc) => doc.toJSON()),
-          catchError((error) => {
-            console.error('Error al crear la ruta:', error);
-            throw new Error('Error al crear la ruta');
+        const courseNames = route.courses;
+
+        return from(
+          this.CourseModule.find({ title: { $in: courseNames } }).exec(),
+        ).pipe(
+          switchMap((courses: CourseDocument[]) => {
+            if (courses.length !== courseNames.length) {
+              const foundCourseNames = courses.map((c) => c.title);
+              const missingCourseNames = courseNames.filter((title) =>
+                foundCourseNames.every((n) => n !== title),
+              );
+              throw new Error(
+                `No se encontraron los siguientes cursos: ${missingCourseNames.join(
+                  ', ',
+                )}`,
+              );
+            }
+
+            return from(this.RouteModule.create(route)).pipe(
+              map((doc) => doc.toJSON() as RouteEntity),
+              catchError((error) => {
+                console.error('Error al crear la ruta:', error);
+                throw new Error('Error al crear la ruta');
+              }),
+            );
           }),
         );
       }),
