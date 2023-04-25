@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsMongoId } from 'class-validator';
 
 export class SubscribeRouteDto {
-  @IsString()
   @IsNotEmpty()
   @ApiProperty()
+  @IsMongoId()
   learnedId?: string;
 
-  @IsString()
   @IsNotEmpty()
   @ApiProperty()
+  @IsMongoId()
   routeid: string;
 }

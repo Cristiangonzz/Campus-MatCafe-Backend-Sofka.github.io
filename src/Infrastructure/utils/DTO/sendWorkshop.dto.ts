@@ -1,21 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsMongoId, MinLength } from 'class-validator';
 
 export class SendWorkshopDto {
-  @IsString()
   @IsNotEmpty()
   @ApiProperty()
+  @IsMongoId()
   learnedId?: string;
   @IsString()
   @IsNotEmpty()
+  @MinLength(5)
   @ApiProperty()
   github?: string;
-  @IsString()
   @IsNotEmpty()
   @ApiProperty()
+  @IsMongoId()
   courseid: string;
   @IsString()
   @IsNotEmpty()
+  @MinLength(5)
   @ApiProperty()
   coment: string;
 }
