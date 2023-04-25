@@ -1,7 +1,15 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, of, switchMap } from 'rxjs';
 import { NotificationEntity } from 'src/Domain/entities';
 import { AdminDelegate } from '../../Application/delegate/admin.delegate';
 import { AdminEntity } from '../../Domain/entities/admin.entity';
@@ -26,8 +34,37 @@ export class AdminController {
   @ApiOperation({ summary: 'Create User' })
   @Post('createUser')
   createUser(@Body() user: UserDto): Observable<AdminEntity | LearnerEntity> {
-    user.rol ? this.delegate.toCreateAdmin() : this.delegate.toCreateLearner();
-    return this.delegate.execute(user);
+    this.delegate.toGetAdminAndLearnerEmail();
+    const search = this.delegate.execute(user.email).pipe(
+      switchMap((data) => {
+        if (data) {
+          return of(
+            new ConflictException(
+              'Ya existe un usuario con el correo proporcionado',
+            ),
+          );
+        }
+      }),
+      catchError((err) => {
+        if (
+          (err.message as string).includes(
+            'No se encontró ni un administrador ni un estudiante con los IDs proporcionados',
+          )
+        ) {
+          user.rol
+            ? this.delegate.toCreateAdmin()
+            : this.delegate.toCreateLearner();
+          return this.delegate.execute(user);
+        }
+      }),
+    );
+
+    return search.pipe(
+      catchError((err) => {
+        console.log(err);
+        return of(err);
+      }),
+    );
   }
 
   @ApiOperation({ summary: 'update  Admin' })
