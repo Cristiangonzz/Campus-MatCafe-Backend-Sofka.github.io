@@ -25,7 +25,9 @@ export class RouteController {
   @ApiOperation({ summary: 'create  route' })
   @Post()
   createRoute(@Body() route: RegisterRouteDto): Observable<RouteEntity> {
-    return this.routeService.createRoute(route);
+    this.useCase.toCreateRoute();
+
+    return this.useCase.execute(route);
   }
   @ApiOperation({ summary: 'uptdate  route' })
   @Put(':id')
