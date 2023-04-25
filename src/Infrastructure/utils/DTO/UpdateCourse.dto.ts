@@ -34,7 +34,6 @@ export class UpdateCourseDto implements CourseEntity {
   @Matches(/^[A-Za-zñÑ\s\d]+$/)
   @ApiProperty()
   requirements: string;
-  @MinLength(5)
   @IsArray()
   @IsOptional()
   @ApiProperty()
