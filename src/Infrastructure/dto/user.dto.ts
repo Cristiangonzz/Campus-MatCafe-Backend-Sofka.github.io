@@ -12,8 +12,8 @@ export class UserDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
+  @Matches(/^[A-Za-z\s]+$/)
   @ApiProperty()
-  @Matches(/^[A-Za-z]+$/)
   name: string;
 
   @IsString()
