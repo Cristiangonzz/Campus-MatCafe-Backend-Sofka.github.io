@@ -4,13 +4,14 @@ import { IAdminDomainService } from 'src/Domain/service/admin.service';
 import { IUseCase } from '../interface/use-case.interface';
 
 import { CreateAdminUseCase } from '../useCase/admin/create-admin.use-case';
-import { GetAdminByEmailUseCase } from '../useCase/admin/get-admin.use-case';
-import { GradeStudentUseCase } from '../useCase/admin/grade-student.use-case';
-import { UpdateAdminUseCase } from '../useCase/admin/update-admin.use-case';
 import { CreateLearnerUseCase } from '../useCase/admin/create-learner.use-case';
+import { GetAdminByEmailUseCase } from '../useCase/admin/get-admin.use-case';
 import { GetLearnerByEmailUseCase } from '../useCase/admin/get-learner.use-case';
-import { UpdateLearnerUseCase } from '../useCase/admin/update-learner.use-case';
 import { GetAdminAndLearnerEmail } from '../useCase/admin/getAdminAndLearner.use-case';
+import { GradeStudentUseCase } from '../useCase/admin/grade-student.use-case';
+import { SaveNotificationUseCase } from '../useCase/admin/save-notification.use-case';
+import { UpdateAdminUseCase } from '../useCase/admin/update-admin.use-case';
+import { UpdateLearnerUseCase } from '../useCase/admin/update-learner.use-case';
 
 export class AdminDelegate implements IUseCase {
   private delegate: IUseCase;
@@ -54,5 +55,9 @@ export class AdminDelegate implements IUseCase {
 
   toGetAdminAndLearnerEmail(): void {
     this.delegate = new GetAdminAndLearnerEmail(this.service);
+  }
+
+  toSaveNotification(): void {
+    this.delegate = new SaveNotificationUseCase(this.service);
   }
 }

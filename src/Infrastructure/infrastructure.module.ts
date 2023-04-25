@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MongoModule } from './database';
 import { CalificationPublisher } from './messaging/calification.publisher';
+import { NotificationPublisher } from './messaging/notification.publisher';
 import { CourseInfrastructureService } from './service';
 import { AdminService } from './service/admin.service';
 import { LearnerService } from './service/learner.service';
@@ -31,6 +32,7 @@ import { RouteInfrastructureService } from './service/route.infrastructure.servi
     RouteInfrastructureService,
     CourseInfrastructureService,
     AdminService,
+    NotificationPublisher,
     CalificationPublisher,
     LearnerService,
   ],
@@ -40,7 +42,7 @@ import { RouteInfrastructureService } from './service/route.infrastructure.servi
     CalificationPublisher,
     LearnerService,
     AdminService,
-    CalificationPublisher,
+    NotificationPublisher,
     LearnerService,
   ],
 })

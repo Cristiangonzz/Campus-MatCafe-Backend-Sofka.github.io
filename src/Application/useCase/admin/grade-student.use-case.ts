@@ -16,7 +16,13 @@ export class GradeStudentUseCase implements IUseCase {
   ): Observable<string> {
     return this.service.gradeStudent(learnerId, calification).pipe(
       map((response) => {
-        this.publish.publish(learnerId, response);
+        const data = {
+          learnerId: learnerId,
+          comment: calification.comment,
+          courseId: calification.courseId,
+          grade: calification.grade,
+        };
+        this.publish.publish(learnerId, data);
         return response;
       }),
     );

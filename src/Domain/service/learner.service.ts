@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { CalificationEntity } from '../entities';
 export interface ILearnerDomainService {
   sendWorkshop(
     learnedId: string,
@@ -7,4 +8,9 @@ export interface ILearnerDomainService {
     coment: string,
   ): Observable<string>;
   subscribeRoute(learnerId: string, idRoute: string): Observable<string>;
+  saveCalification(
+    grade: number,
+    comment: string,
+    courseId: string,
+  ): Observable<CalificationEntity>;
 }

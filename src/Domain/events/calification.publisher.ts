@@ -6,8 +6,15 @@ import { Observable } from 'rxjs';
 export class CalificationEventPublisher {
   constructor(@Inject('CAMPUS_SERVICE') private readonly proxy: ClientProxy) {}
 
-  publish(id: string, data: string): Observable<string> {
-    console.log(JSON.stringify({ id, data }));
-    return this.proxy.emit('add.favorite', { id, data });
+  publish(
+    id: string,
+    data: {
+      learnerId: string;
+      comment: string;
+      courseId: string;
+      grade: number;
+    },
+  ): Observable<string> {
+    return this.proxy.emit('campus.calification', JSON.stringify({ id, data }));
   }
 }

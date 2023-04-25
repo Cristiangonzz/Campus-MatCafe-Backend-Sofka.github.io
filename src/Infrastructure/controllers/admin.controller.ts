@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { EventPattern, Payload } from '@nestjs/microservices';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { NotificationEntity } from 'src/Domain/entities';
 import { AdminDelegate } from '../../Application/delegate/admin.delegate';
 import { AdminEntity } from '../../Domain/entities/admin.entity';
 import { LearnerEntity } from '../../Domain/entities/learner.entity';
@@ -72,5 +74,26 @@ export class AdminController {
     this.delegate.toGetAdminAndLearnerEmail();
 
     return this.delegate.execute(email);
+  }
+  @EventPattern('campus.notification')
+  notification(@Payload() data: string): Observable<string> {
+    const notification: {
+      id: string;
+      data: {
+        id: string;
+        github: string;
+        learnedId: string;
+        comment: string;
+      };
+    } = JSON.parse(data);
+    const save = new NotificationEntity(
+      notification.data.id,
+      notification.data.github,
+      notification.data.learnedId,
+      notification.data.comment,
+    );
+    this.delegate.toSaveNotification();
+    this.delegate.execute(notification.id, save);
+    return of('ok');
   }
 }

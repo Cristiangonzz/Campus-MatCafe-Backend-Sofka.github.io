@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common/decorators/modules/module.decorator';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AdminRepository } from './repository/admin.repository';
+import { CourseRepository } from './repository/course-repository';
+import { LearnerRepository } from './repository/learner.repository';
+import { RouteRepository } from './repository/route-repository';
 import {
   Admin,
   AdminSchema,
@@ -11,13 +14,18 @@ import {
   Route,
   RouteSchema,
 } from './schemas';
+import {
+  Calification,
+  CalificationSchema,
+} from './schemas/calification.schema';
+import {
+  Notification,
+  NotificationSchema,
+} from './schemas/notification.schema';
+import { LearnerMongoService } from './service/Learner.mongo.service';
 import { AdminMongoService } from './service/admin.service';
-import { CourseRepository } from './repository/course-repository';
-import { RouteRepository } from './repository/route-repository';
 import { CourseServiceMongo } from './service/course.mongo.service';
 import { RouteServiceMongo } from './service/route.mongo.service';
-import { LearnerMongoService } from './service/Learner.mongo.service';
-import { LearnerRepository } from './repository/learner.repository';
 
 @Module({
   imports: [
@@ -32,6 +40,8 @@ import { LearnerRepository } from './repository/learner.repository';
       { name: Admin.name, schema: AdminSchema },
       { name: Learner.name, schema: LearnerSchema },
       { name: Course.name, schema: CourseSchema },
+      { name: Notification.name, schema: NotificationSchema },
+      { name: Calification.name, schema: CalificationSchema },
     ]),
   ],
 
