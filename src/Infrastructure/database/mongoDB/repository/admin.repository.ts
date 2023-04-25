@@ -27,7 +27,14 @@ export class AdminRepository {
   ) {}
 
   createAdmin(admin: AdminEntity): Observable<AdminEntity> {
-    return from(this.adminRepository.create(admin));
+    return this.getLernerByEmail(admin.email).pipe(
+      switchMap((learner) => {
+        if (learner) {
+          throw new Error(`Se encontró estudiante con el mail: ${admin.email}`);
+        }
+        return from(this.adminRepository.create(admin));
+      }),
+    );
   }
 
   getAdminByEmail(email: string): Observable<AdminEntity> {
@@ -35,7 +42,14 @@ export class AdminRepository {
   }
 
   createLerner(learner: LearnerEntity): Observable<LearnerEntity> {
-    return from(this.learnerRepository.create(learner));
+    return this.getAdminByEmail(learner.email).pipe(
+      switchMap((learner) => {
+        if (learner) {
+          throw new Error(`Se encontró admin con el mail: ${learner.email}`);
+        }
+        return from(this.learnerRepository.create(learner));
+      }),
+    );
   }
 
   getLernerByEmail(email: string): Observable<LearnerEntity> {
