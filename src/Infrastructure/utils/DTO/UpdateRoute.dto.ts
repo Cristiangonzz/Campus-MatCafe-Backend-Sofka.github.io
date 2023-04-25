@@ -3,6 +3,7 @@ import {
   IsMongoId,
   IsOptional,
   IsString,
+  Matches,
   MinLength,
 } from 'class-validator';
 
@@ -13,14 +14,17 @@ export class UpdateRouteDto implements RouteEntity {
   @IsString()
   @IsOptional()
   @MinLength(5)
+  @Matches(/^[A-Za-zñÑ\s\d]+$/)
   @ApiProperty()
   title: string;
   @IsOptional()
   @IsString()
+  @Matches(/^[A-Za-zñÑ\s\d]+$/)
   @ApiProperty()
   description: string;
   @IsString()
   @IsOptional()
+  @Matches(/^[A-Za-zñÑ\s\d]+$/)
   @MinLength(5)
   @ApiProperty()
   duration: string;
