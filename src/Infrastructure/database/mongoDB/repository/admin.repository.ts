@@ -4,11 +4,16 @@ import { Model } from 'mongoose';
 
 import { Observable, forkJoin, from, map, switchMap } from 'rxjs';
 
+import { NotificationEntity } from 'src/Domain/entities';
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
 import { LearnerEntity } from 'src/Domain/entities/learner.entity';
 import { CalificationEntity } from '../../../../Domain/entities/calification.entity';
 import { Admin, AdminDocument } from '../schemas/admin.schema';
 import { Learner, LearnerDocument } from '../schemas/learner.schema';
+import {
+  Notification,
+  NotificationDocument,
+} from '../schemas/notification.schema';
 
 @Injectable()
 export class AdminRepository {
@@ -17,6 +22,8 @@ export class AdminRepository {
     private readonly adminRepository: Model<AdminDocument>,
     @InjectModel(Learner.name)
     private readonly learnerRepository: Model<LearnerDocument>,
+    @InjectModel(Notification.name)
+    private readonly notificationRepository: Model<NotificationDocument>,
   ) {}
 
   createAdmin(admin: AdminEntity): Observable<AdminEntity> {
@@ -111,6 +118,19 @@ export class AdminRepository {
         throw new Error(
           `No se encontró ni un administrador ni un estudiante con los IDs proporcionados: ${email}, ${email}`,
         );
+      }),
+    );
+  }
+  saveNotification(
+    learnerId: string,
+    notification: NotificationEntity,
+  ): Observable<NotificationEntity> {
+    return from(
+      this.notificationRepository.create({
+        id: notification.id,
+        repo: notification.repo,
+        course: notification.course,
+        coment: notification.coment,
       }),
     );
   }

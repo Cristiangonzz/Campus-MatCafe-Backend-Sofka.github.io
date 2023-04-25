@@ -1,7 +1,8 @@
-import { CalificationEntity } from './../entities/calification.entity';
 import { Observable } from 'rxjs';
+import { NotificationEntity } from '../entities';
 import { AdminEntity } from '../entities/admin.entity';
 import { LearnerEntity } from '../entities/learner.entity';
+import { CalificationEntity } from './../entities/calification.entity';
 
 export interface IAdminDomainService {
   createLearner(Learner: LearnerEntity): Observable<LearnerEntity>;
@@ -21,4 +22,8 @@ export interface IAdminDomainService {
   getAdminAndLearnerEmail(
     email: string,
   ): Observable<AdminEntity | LearnerEntity>;
+  saveNotification(
+    learnerId: string,
+    notification: NotificationEntity,
+  ): Observable<NotificationEntity>;
 }
