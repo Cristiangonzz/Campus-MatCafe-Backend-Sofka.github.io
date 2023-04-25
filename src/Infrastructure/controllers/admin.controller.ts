@@ -64,4 +64,13 @@ export class AdminController {
     this.delegate.toGradeStudent();
     return this.delegate.execute(learner.learnerId, learner);
   }
+
+  @Get('adminAndLearnerByEmail/:email')
+  getAdminAndLearnerEmail(
+    @Param('email') email: string,
+  ): Observable<AdminEntity | LearnerEntity> {
+    this.delegate.toGetAdminAndLearnerEmail();
+
+    return this.delegate.execute(email);
+  }
 }

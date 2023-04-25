@@ -10,6 +10,7 @@ import { UpdateAdminUseCase } from '../useCase/admin/update-admin.use-case';
 import { CreateLearnerUseCase } from '../useCase/admin/create-learner.use-case';
 import { GetLearnerByEmailUseCase } from '../useCase/admin/get-learner.use-case';
 import { UpdateLearnerUseCase } from '../useCase/admin/update-learner.use-case';
+import { GetAdminAndLearnerEmail } from '../useCase/admin/getAdminAndLearner.use-case';
 
 export class AdminDelegate implements IUseCase {
   private delegate: IUseCase;
@@ -49,5 +50,9 @@ export class AdminDelegate implements IUseCase {
 
   toGradeStudent(): void {
     this.delegate = new GradeStudentUseCase(this.service, this.publish);
+  }
+
+  toGetAdminAndLearnerEmail(): void {
+    this.delegate = new GetAdminAndLearnerEmail(this.service);
   }
 }

@@ -22,12 +22,40 @@ export class CourseRepository {
             `No se encontró un administrador con el ID ${Course.adminId}`,
           );
         }
-        return from(this.CourseModule.create(Course)).pipe(
-          map((doc) => doc.toJSON()),
-          catchError(() => {
-            throw new Error('Error al crear el curso');
+
+        return this.addcourseToAdmin(Course.adminId, Course.title).pipe(
+          switchMap(() => {
+            return from(this.CourseModule.create(Course)).pipe(
+              map((doc) => doc.toJSON()),
+              catchError(() => {
+                throw new Error('Error al crear el curso');
+              }),
+            );
           }),
         );
+      }),
+    );
+  }
+
+  addcourseToAdmin(adminId, courseTitle): Observable<string> {
+    return from(
+      this.adminRepository.findByIdAndUpdate(
+        adminId,
+        { $addToSet: { course: courseTitle } },
+        { new: true },
+      ),
+    ).pipe(
+      map((updatedAdmin: AdminDocument) => {
+        if (updatedAdmin.route.includes(courseTitle)) {
+          return `El título del curso  '${courseTitle}' ya existe en el administrador con ID ${adminId}`;
+        }
+      }),
+      catchError((error) => {
+        console.error(
+          'Error al actualizar las rutas del administrador:',
+          error,
+        );
+        throw new Error('Error al actualizar las rutas del administrador');
       }),
     );
   }

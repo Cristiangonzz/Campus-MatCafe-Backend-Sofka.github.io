@@ -42,7 +42,6 @@ import { RouteInfrastructureService } from './service/route.infrastructure.servi
     AdminService,
     CalificationPublisher,
     LearnerService,
-
   ],
 })
 export class InfrastructureModule {}

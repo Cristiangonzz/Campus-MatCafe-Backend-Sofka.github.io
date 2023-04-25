@@ -17,4 +17,8 @@ export interface IAdminDomainService {
     learnerId: string,
     calification: CalificationEntity,
   ): Observable<string>;
+
+  getAdminAndLearnerEmail(
+    email: string,
+  ): Observable<AdminEntity | LearnerEntity>;
 }
