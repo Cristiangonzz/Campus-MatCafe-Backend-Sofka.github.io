@@ -12,7 +12,7 @@ export class UserDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-z\s]+$/)
+  @Matches(/^[A-Za-zñÑ\s]+$/)
   @ApiProperty()
   name: string;
 
