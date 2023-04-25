@@ -38,7 +38,16 @@ export class AdminRepository {
   }
 
   getAdminByEmail(email: string): Observable<AdminEntity> {
-    return from(this.adminRepository.findOne({ email }));
+    return from(this.adminRepository.findOne({ email })).pipe(
+      map((admin) => {
+        if (!admin) {
+          throw new Error(
+            `No se encontró administrador con correo electrónico: ${email}`,
+          );
+        }
+        return admin;
+      }),
+    );
   }
 
   createLerner(learner: LearnerEntity): Observable<LearnerEntity> {
@@ -53,7 +62,16 @@ export class AdminRepository {
   }
 
   getLernerByEmail(email: string): Observable<LearnerEntity> {
-    return from(this.learnerRepository.findOne({ email }).exec());
+    return from(this.learnerRepository.findOne({ email })).pipe(
+      map((learner) => {
+        if (!learner) {
+          throw new Error(
+            `No se encontró aprendiz con correo electrónico: ${email}`,
+          );
+        }
+        return learner;
+      }),
+    );
   }
 
   updateAdmin(email: string, admin: AdminEntity): Observable<AdminEntity> {
