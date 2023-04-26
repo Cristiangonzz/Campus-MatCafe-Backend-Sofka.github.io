@@ -5,8 +5,9 @@ import { APP_FILTER } from '@nestjs/core';
 import { InfrastructureModule } from './Infrastructure';
 import { AdminController } from './Infrastructure/controllers/admin.controller';
 import { CourseController } from './Infrastructure/controllers/courseController';
-import { MongoServerErrorExceptionFilter } from './Infrastructure/utils/exception-filters';
 import { LearnerController } from './Infrastructure/controllers/learner.controller';
+import { MongoServerErrorExceptionFilter } from './Infrastructure/utils/exception-filters';
+import { ErrorExceptionFilter } from './Infrastructure/utils/exception-filters/error.exception-filter';
 
 @Module({
   imports: [InfrastructureModule],
@@ -20,6 +21,10 @@ import { LearnerController } from './Infrastructure/controllers/learner.controll
     {
       provide: APP_FILTER,
       useClass: MongoServerErrorExceptionFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ErrorExceptionFilter,
     },
   ],
 })
