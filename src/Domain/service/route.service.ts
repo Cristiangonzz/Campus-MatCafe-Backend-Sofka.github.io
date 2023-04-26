@@ -7,4 +7,5 @@ export interface IRouteDomainService {
   deleteRoute(RouteId: string): Observable<boolean>;
   getRoute(RouteId: string): Observable<RouteEntity>;
   getAllRoutes(): Observable<RouteEntity[]>;
+  getRouteName(Name: string): Observable<RouteEntity>;
 }

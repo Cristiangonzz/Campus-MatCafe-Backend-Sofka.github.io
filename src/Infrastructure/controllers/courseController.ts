@@ -23,6 +23,13 @@ export class CourseController {
   constructor(private readonly CourseService: CourseInfrastructureService) {
     this.useCase = new CourseDelegate(this.CourseService);
   }
+
+  @Get('byname/:name')
+  getRouteName(@Param('name') name: string): Observable<CourseEntity> {
+    console.log(name);
+    this.useCase.toGetCourseByName();
+    return this.useCase.execute(name);
+  }
   @ApiOperation({ summary: 'create  course' })
   @Post()
   createCourse(@Body() Course: RegisterCourseDto): Observable<CourseEntity> {

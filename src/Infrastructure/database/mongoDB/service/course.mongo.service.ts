@@ -7,6 +7,9 @@ import { CourseEntity } from 'src/Domain/entities';
 @Injectable()
 export class CourseServiceMongo implements ICourseDomainService {
   constructor(private readonly repository: CourseRepository) {}
+  getCourseName(Name: string): Observable<CourseEntity> {
+    return this.repository.getCourseByName(Name);
+  }
 
   createCourse(Course: CourseEntity): Observable<CourseEntity> {
     return this.repository.createCourse(Course);
