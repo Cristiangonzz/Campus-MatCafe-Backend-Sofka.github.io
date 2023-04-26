@@ -12,7 +12,7 @@ export class ErrorExceptionFilter implements ExceptionFilter<Error> {
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
     const message = exception.message;
-    const statusCode = HttpStatus.BAD_REQUEST;
+    const statusCode = HttpStatus.CONFLICT;
     const details = exception;
 
     response.status(statusCode).json({ statusCode, message, details });
