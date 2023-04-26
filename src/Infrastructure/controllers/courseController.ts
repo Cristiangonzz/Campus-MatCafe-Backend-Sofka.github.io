@@ -24,16 +24,17 @@ export class CourseController {
     this.useCase = new CourseDelegate(this.CourseService);
   }
 
-  @Get('byname/:name')
-  getRouteName(@Param('name') name: string): Observable<CourseEntity> {
-    console.log(name);
+  @Get('getByName/:id')
+  getRouteName(@Param('id') id: string): Observable<CourseEntity> {
     this.useCase.toGetCourseByName();
-    return this.useCase.execute(name);
+    return this.useCase.execute(id);
   }
   @ApiOperation({ summary: 'create  course' })
   @Post()
   createCourse(@Body() Course: RegisterCourseDto): Observable<CourseEntity> {
-    return this.CourseService.createCourse(Course);
+    this.useCase.toCreateCourse();
+
+    return this.useCase.execute(Course);
   }
   @ApiOperation({ summary: 'update  course' })
   @Put(':id')
