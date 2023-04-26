@@ -115,6 +115,8 @@ export class CourseRepository {
           courseEntity.title = CourseDocuments.title;
           courseEntity.content = CourseDocuments.content;
           courseEntity.requirements = CourseDocuments.requirements;
+          courseEntity.id = CourseDocuments.id;
+
           return courseEntity;
         });
         return Course;

@@ -142,6 +142,7 @@ export class RouteRepository {
           routeEntity.description = RouteDocuments.description;
           routeEntity.duration = RouteDocuments.duration;
           routeEntity.title = RouteDocuments.title;
+          routeEntity.id = RouteDocuments.id;
           return routeEntity;
         });
         return route;

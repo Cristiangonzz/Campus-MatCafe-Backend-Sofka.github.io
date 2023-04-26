@@ -27,7 +27,7 @@ export class Route {
   @ApiProperty()
   adminId: string;
   @Prop()
-  id: string;
+  _id?: string;
 }
 
 export const RouteSchema = SchemaFactory.createForClass(Route);
