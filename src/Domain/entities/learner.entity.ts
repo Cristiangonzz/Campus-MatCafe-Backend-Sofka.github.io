@@ -1,4 +1,4 @@
-import { ICalification, ILearner, IRoute } from '../interface';
+import { ICalification, ILearner } from '../interface';
 
 export class LearnerEntity implements ILearner {
   calification: ICalification[];

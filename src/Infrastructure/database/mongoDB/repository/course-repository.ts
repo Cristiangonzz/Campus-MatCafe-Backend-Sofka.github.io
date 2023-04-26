@@ -126,4 +126,19 @@ export class CourseRepository {
       }),
     );
   }
+
+  getCourseByName(CourseName: string): Observable<CourseEntity> {
+    console.log(CourseName);
+    return from(this.CourseModule.findOne({ title: CourseName })).pipe(
+      map((doc) => {
+        if (!doc) {
+          throw new Error('El curso  no existe');
+        }
+        return doc.toJSON();
+      }),
+      catchError(() => {
+        throw new Error('Error al ob3tener el curso ');
+      }),
+    );
+  }
 }
