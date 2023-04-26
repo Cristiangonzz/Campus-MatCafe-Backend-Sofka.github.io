@@ -14,12 +14,15 @@ import {
   Notification,
   NotificationDocument,
 } from '../schemas/notification.schema';
+import { Course, CourseDocument } from '../schemas';
 
 @Injectable()
 export class AdminRepository {
   constructor(
     @InjectModel(Admin.name)
     private readonly adminRepository: Model<AdminDocument>,
+    @InjectModel(Course.name)
+    private readonly courseRepository: Model<CourseDocument>,
     @InjectModel(Learner.name)
     private readonly learnerRepository: Model<LearnerDocument>,
     @InjectModel(Notification.name)
@@ -119,33 +122,40 @@ export class AdminRepository {
     learnerId: string,
     calification: CalificationEntity,
   ): Observable<string> {
-    return from(this.learnerRepository.findById(learnerId)).pipe(
-      switchMap((user) => {
-        if (!Array.isArray(user.calification)) {
-          user.calification = [];
+    return from(this.courseRepository.findById(calification.courseId)).pipe(
+      switchMap((course) => {
+        if (!course) {
+          throw new Error(`Curso ${calification.courseId} no existe`);
         }
+        return from(this.learnerRepository.findById(learnerId)).pipe(
+          switchMap((user) => {
+            if (!Array.isArray(user.calification)) {
+              user.calification = [];
+            }
 
-        const index = user.calification.findIndex(
-          (c) => c.courseId === calification.courseId,
-        );
+            const index = user.calification.findIndex(
+              (c) => c.courseId === calification.courseId,
+            );
 
-        if (index !== -1) {
-          user.calification[index].grade = calification.grade;
-          user.calification[index].comment = calification.comment;
-        } else {
-          const newCalification: CalificationEntity = {
-            grade: calification.grade,
-            comment: calification.comment,
-            courseId: calification.courseId,
-          };
-          user.calification.push(newCalification);
-        }
+            if (index !== -1) {
+              user.calification[index].grade = calification.grade;
+              user.calification[index].comment = calification.comment;
+            } else {
+              const newCalification: CalificationEntity = {
+                grade: calification.grade,
+                comment: calification.comment,
+                courseId: calification.courseId,
+              };
+              user.calification.push(newCalification);
+            }
 
-        return from(user.save()).pipe(
-          map(
-            () =>
-              `Calificación actualizada curso ${calification.courseId} y su calificacion fue de ${calification.grade} `,
-          ),
+            return from(user.save()).pipe(
+              map(
+                () =>
+                  `Calificación actualizada curso ${calification.courseId} y su calificacion fue de ${calification.grade} `,
+              ),
+            );
+          }),
         );
       }),
     );
