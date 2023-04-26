@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { Observable, forkJoin, from, map, switchMap } from 'rxjs';
+import { Observable, catchError, forkJoin, from, map, switchMap } from 'rxjs';
 
 import { NotificationEntity } from 'src/Domain/entities';
 import { AdminEntity } from 'src/Domain/entities/admin.entity';
@@ -27,12 +27,21 @@ export class AdminRepository {
   ) {}
 
   createAdmin(admin: AdminEntity): Observable<AdminEntity> {
-    return this.getLernerByEmail(admin.email).pipe(
-      switchMap((learner) => {
-        if (learner) {
-          throw new Error(`Se encontró estudiante con el mail: ${admin.email}`);
+    return from(
+      this.learnerRepository.findOne({ email: admin.email }).exec(),
+    ).pipe(
+      switchMap((existingAdmin) => {
+        if (existingAdmin) {
+          throw new Error(`Ya existe un aprendiz con el email ${admin.email}`);
         }
-        return from(this.adminRepository.create(admin));
+
+        return from(this.adminRepository.create(admin)).pipe(
+          map((doc) => doc.toJSON() as AdminEntity),
+          catchError((error) => {
+            console.error('Error al crear el administrador:', error);
+            throw new Error('Error al crear el administrador');
+          }),
+        );
       }),
     );
   }
@@ -51,12 +60,21 @@ export class AdminRepository {
   }
 
   createLerner(learner: LearnerEntity): Observable<LearnerEntity> {
-    return this.getAdminByEmail(learner.email).pipe(
-      switchMap((learner) => {
-        if (learner) {
-          throw new Error(`Se encontró admin con el mail: ${learner.email}`);
+    return from(
+      this.adminRepository.findOne({ email: learner.email }).exec(),
+    ).pipe(
+      switchMap((existingAdmin) => {
+        if (existingAdmin) {
+          throw new Error(`Ya existe un admin con el email ${learner.email}`);
         }
-        return from(this.learnerRepository.create(learner));
+
+        return from(this.learnerRepository.create(learner)).pipe(
+          map((doc) => doc.toJSON() as LearnerEntity),
+          catchError((error) => {
+            console.error('Error al crear el Aprendiz:', error);
+            throw new Error('Error al crear el Aprendiz');
+          }),
+        );
       }),
     );
   }
