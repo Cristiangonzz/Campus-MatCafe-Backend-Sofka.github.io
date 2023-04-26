@@ -8,6 +8,7 @@ import {
   UpdateRouteUseCase,
 } from '../useCase';
 import { Observable } from 'rxjs';
+import { GetRouteByNameUseCase } from '../useCase/routesUseCase/get-routebyName-use-case';
 
 export class RouteDelegate implements IUseCase {
   private delegate: IUseCase;
@@ -36,5 +37,9 @@ export class RouteDelegate implements IUseCase {
 
   getAllRoute(): void {
     this.delegate = new GetAllRouteUseCase(this.RouteService);
+  }
+
+  toGetRouteByName(): void {
+    this.delegate = new GetRouteByNameUseCase(this.RouteService);
   }
 }

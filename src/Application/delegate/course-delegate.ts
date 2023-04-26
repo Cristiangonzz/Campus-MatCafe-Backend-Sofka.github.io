@@ -8,6 +8,7 @@ import {
   GetCourseUseCase,
   UpdateCourseUseCase,
 } from '../useCase';
+import { GetCourseByNameUseCase } from '../useCase/courseUseCase/getCourse-byName-use-case';
 
 export class CourseDelegate implements IUseCase {
   private delegate: IUseCase;
@@ -36,5 +37,9 @@ export class CourseDelegate implements IUseCase {
 
   getAllCourse(): void {
     this.delegate = new GetAllCourseUseCase(this.courseService);
+  }
+
+  toGetCourseByName(): void {
+    this.delegate = new GetCourseByNameUseCase(this.courseService);
   }
 }
