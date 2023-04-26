@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Course, CourseSchema } from './course.schema';
 import { ApiProperty } from '@nestjs/swagger';
+import { Document } from 'mongoose';
 
 export type RouteDocument = Route & Document;
 
