@@ -56,4 +56,11 @@ export class RouteController {
     this.useCase.getAllRoute();
     return this.useCase.execute();
   }
+  @ApiOperation({ summary: 'get route  by name' })
+  @Get('byname/:id')
+  getRouteName(@Param('id') id: string): Observable<RouteEntity> {
+    console.log(id);
+    this.useCase.toGetRouteByName();
+    return this.useCase.execute(id);
+  }
 }
