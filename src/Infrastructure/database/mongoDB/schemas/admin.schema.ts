@@ -41,6 +41,9 @@ export class Admin {
   @Prop({ required: true })
   @ApiProperty()
   rol: boolean;
+
+  @Prop()
+  id: string;
 }
 
 export const AdminSchema = SchemaFactory.createForClass(Admin);

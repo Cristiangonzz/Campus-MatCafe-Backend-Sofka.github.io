@@ -35,6 +35,8 @@ export class Learner {
   @Prop({ required: true })
   @ApiProperty()
   rol: boolean;
+  @Prop()
+  id: string;
 }
 
 export const LearnerSchema = SchemaFactory.createForClass(Learner);
