@@ -7,4 +7,5 @@ export interface ICourseDomainService {
   deleteCourse(CourseId: string): Observable<boolean>;
   getCourse(CourseId: string): Observable<CourseEntity>;
   getAllCourses(): Observable<CourseEntity[]>;
+  getCourseName(Name: string): Observable<CourseEntity>;
 }

@@ -152,4 +152,18 @@ export class RouteRepository {
       }),
     );
   }
+
+  getRouteByName(RouteName: string): Observable<RouteEntity> {
+    return from(this.RouteModule.findOne({ title: RouteName })).pipe(
+      map((doc) => {
+        if (!doc) {
+          throw new Error('La ruta no existe');
+        }
+        return doc.toJSON();
+      }),
+      catchError(() => {
+        throw new Error('Error al obtener la ruta');
+      }),
+    );
+  }
 }
