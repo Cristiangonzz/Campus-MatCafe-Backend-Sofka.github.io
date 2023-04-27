@@ -49,9 +49,4 @@ export class RegisterCourseDto implements CourseEntity {
   @IsMongoId()
   @ApiProperty()
   adminId: string;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  url?: string;
 }

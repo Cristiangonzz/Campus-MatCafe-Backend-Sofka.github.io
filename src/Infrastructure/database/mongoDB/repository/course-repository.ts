@@ -115,6 +115,39 @@ export class CourseRepository {
       }),
       switchMap(() =>
         from(
+          this.CourseModule.find(
+            { title: oldCourseTitle },
+            { title: 1 },
+          ).exec(),
+        ).pipe(
+          map((routes) => routes.map((route) => route.title)),
+          switchMap((routeNames) =>
+            from(this.RouteModule.find({}).exec()).pipe(
+              switchMap((learners) => {
+                const updates$ = learners.map((learner) => {
+                  routeNames.forEach((routeName) => {
+                    if (learner.courses.includes(routeName)) {
+                      learner.courses = learner.courses.map((route) =>
+                        route === oldCourseTitle ? Course.title : route,
+                      );
+                    }
+                  });
+                  return from(learner.save());
+                });
+                return forkJoin(updates$);
+              }),
+              switchMap(() =>
+                this.RouteModule.updateMany(
+                  { courses: oldCourseTitle },
+                  { $set: { 'courses.$': Course.title } },
+                ).exec(),
+              ),
+            ),
+          ),
+        ),
+      ),
+      switchMap(() =>
+        from(
           this.CourseModule.findOneAndUpdate(
             { _id: objectid },
             { $set: Course },
@@ -142,6 +175,7 @@ export class CourseRepository {
       }),
     );
   }
+
   deleteCourse(CourseId: string): Observable<boolean> {
     const objectid = new ObjectId(CourseId);
     let adminId: string;
