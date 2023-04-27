@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   IsString,
   Matches,
+  IsOptional,
   MinLength,
 } from 'class-validator';
 import { CourseEntity } from 'src/Domain/entities';
@@ -48,4 +49,9 @@ export class RegisterCourseDto implements CourseEntity {
   @IsMongoId()
   @ApiProperty()
   adminId: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  url?: string;
 }
