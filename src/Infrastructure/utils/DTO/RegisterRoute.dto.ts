@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
   IsMongoId,
@@ -7,17 +8,16 @@ import {
   MinLength,
 } from 'class-validator';
 import { RouteEntity } from 'src/Domain/entities';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterRouteDto implements RouteEntity {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
   @ApiProperty()
-  @Matches(/^[A-Za-zñÑ\s\d]+$/)
+  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
   title: string;
 
-  @Matches(/^[A-Za-zñÑ\s\d]+$/)
+  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
   @IsString()
   @MinLength(5)
   @IsNotEmpty()
@@ -26,7 +26,7 @@ export class RegisterRouteDto implements RouteEntity {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñÑ\s\d]+$/)
+  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
   @ApiProperty()
   duration: string;
   @IsArray()
