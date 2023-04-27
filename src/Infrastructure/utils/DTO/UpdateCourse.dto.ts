@@ -44,8 +44,4 @@ export class UpdateCourseDto implements CourseEntity {
   @ApiProperty()
   @IsMongoId()
   adminId: string;
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  url?: string;
 }
