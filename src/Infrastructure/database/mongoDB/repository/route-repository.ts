@@ -1,9 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { Observable, catchError, concatMap, from, map, switchMap } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  concatMap,
+  forkJoin,
+  from,
+  map,
+  of,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import {
   AdminDocument,
   Course,
   CourseDocument,
+  Learner,
+  LearnerDocument,
   Route,
   RouteDocument,
 } from '../schemas';
@@ -15,6 +28,8 @@ import { RouteEntity } from 'src/Domain/entities';
 @Injectable()
 export class RouteRepository {
   constructor(
+    @InjectModel(Learner.name)
+    private readonly learnerRepository: Model<LearnerDocument>,
     @InjectModel(Admin.name)
     private readonly adminRepository: Model<AdminDocument>,
     @InjectModel(Route.name)
@@ -97,24 +112,83 @@ export class RouteRepository {
 
   updateRoute(id: string, Route: RouteEntity): Observable<RouteEntity> {
     const objectId = new ObjectId(id);
-    return from(
-      this.RouteModule.findOneAndUpdate(
-        { _id: objectId },
-        { $set: Route },
-        { new: true },
-      ).exec(),
-    ).pipe(
+    let adminId: string;
+    let oldRouteName: string;
+    let newRouteName: string;
+    return from(this.RouteModule.findOne({ _id: objectId }).exec()).pipe(
+      tap((oldRoute) => {
+        adminId = oldRoute.adminId;
+        oldRouteName = oldRoute.title;
+        newRouteName = Route.title;
+      }),
+      switchMap(() =>
+        from(this.adminRepository.findOne({ _id: adminId }).exec()),
+      ),
+      tap((admin) => {
+        const routeIndex = admin.route.indexOf(oldRouteName);
+        if (routeIndex !== -1) {
+          admin.route.splice(routeIndex, 1, newRouteName);
+          admin.save();
+        }
+      }),
+      switchMap(() =>
+        from(
+          this.RouteModule.findOneAndUpdate(
+            { _id: objectId },
+            { $set: Route },
+            { new: true },
+          ).exec(),
+        ),
+      ),
       map((doc) => {
         const { adminId, courses, description, duration, title } = doc;
+        if (!courses || courses.length === 0) {
+          this.deleteRoute(id).subscribe();
+          throw new Error('La ruta no contiene cursos y fue elinminada');
+        }
         return new RouteEntity(title, description, duration, courses, adminId);
+      }),
+      catchError((error) => {
+        // Si la ruta no existe, arrojar un error
+        if (error.message.includes('Cast to ObjectId failed')) {
+          throw new Error('La ruta no existe');
+        }
+        throw error;
       }),
     );
   }
 
   deleteRoute(RouteId: string): Observable<boolean> {
     const objectId = new ObjectId(RouteId);
-    return from(this.RouteModule.deleteOne({ _id: objectId }).exec()).pipe(
-      map((result) => result.deletedCount > 0),
+    let adminId: string;
+    let routeName: string;
+    return from(this.RouteModule.findOne({ _id: objectId }).exec()).pipe(
+      tap((route) => {
+        adminId = route.adminId;
+        routeName = route.title;
+      }),
+      switchMap(() =>
+        from(
+          this.adminRepository
+            .findOneAndUpdate({ _id: adminId }, { $pull: { route: routeName } })
+            .exec(),
+        ),
+      ),
+      switchMap(() =>
+        from(this.RouteModule.deleteOne({ _id: objectId }).exec()),
+      ),
+      switchMap(() =>
+        from(this.learnerRepository.find({ route: RouteId }).exec()).pipe(
+          switchMap((learners) => {
+            const updates$ = learners.map((learner) => {
+              learner.route = learner.route.filter((id) => id !== RouteId);
+              return from(learner.save());
+            });
+            return forkJoin(updates$);
+          }),
+        ),
+      ),
+      map(() => true),
     );
   }
 

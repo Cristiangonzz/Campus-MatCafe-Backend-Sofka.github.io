@@ -1,6 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { Observable, catchError, from, map, switchMap } from 'rxjs';
-import { AdminDocument, Course, CourseDocument } from '../schemas';
+import {
+  of,
+  Observable,
+  catchError,
+  from,
+  map,
+  switchMap,
+  tap,
+  forkJoin,
+} from 'rxjs';
+import {
+  AdminDocument,
+  Course,
+  CourseDocument,
+  Learner,
+  LearnerDocument,
+  Route,
+  RouteDocument,
+} from '../schemas';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CourseEntity } from 'src/Domain/entities';
@@ -9,10 +26,14 @@ import { Admin, ObjectId } from 'mongodb';
 @Injectable()
 export class CourseRepository {
   constructor(
+    @InjectModel(Learner.name)
+    private readonly learnerRepository: Model<LearnerDocument>,
     @InjectModel(Admin.name)
     private readonly adminRepository: Model<AdminDocument>,
     @InjectModel(Course.name)
     private readonly CourseModule: Model<CourseDocument>,
+    @InjectModel(Route.name)
+    private readonly RouteModule: Model<RouteDocument>,
   ) {}
   createCourse(Course: CourseEntity): Observable<CourseEntity> {
     return from(this.adminRepository.findById(Course.adminId)).pipe(
@@ -62,13 +83,45 @@ export class CourseRepository {
 
   updateCourse(id: string, Course: CourseEntity): Observable<CourseEntity> {
     const objectid = new ObjectId(id);
+    let oldCourseTitle: string;
+    let adminId: string;
+
     return from(
-      this.CourseModule.findOneAndUpdate(
-        { _id: objectid },
-        { $set: Course },
-        { new: true },
-      ).exec(),
+      this.CourseModule.findOne<CourseDocument>({ _id: objectid }).exec(),
     ).pipe(
+      switchMap((oldCourse) => {
+        if (!oldCourse) {
+          throw new Error('El curso no existe');
+        }
+        oldCourseTitle = oldCourse.title;
+        adminId = oldCourse.adminId;
+        return from(
+          this.CourseModule.findOneAndUpdate(
+            { _id: objectid },
+            { $set: Course },
+            { new: true },
+          ).exec(),
+        );
+      }),
+      switchMap(() => {
+        return from(this.adminRepository.findOne({ _id: adminId }).exec());
+      }),
+      tap((admin) => {
+        const courseIndex = admin.course.indexOf(oldCourseTitle);
+        if (courseIndex !== -1) {
+          admin.course.splice(courseIndex, 1, Course.title);
+          admin.save();
+        }
+      }),
+      switchMap(() =>
+        from(
+          this.CourseModule.findOneAndUpdate(
+            { _id: objectid },
+            { $set: Course },
+            { new: true },
+          ).exec(),
+        ),
+      ),
       map((doc) => {
         const { adminId, description, duration, title, requirements, content } =
           doc;
@@ -81,13 +134,97 @@ export class CourseRepository {
           adminId,
         );
       }),
+      catchError((error) => {
+        if (error.message.includes('Cast to ObjectId failed')) {
+          throw new Error('El curso no existe');
+        }
+        throw error;
+      }),
     );
   }
-
   deleteCourse(CourseId: string): Observable<boolean> {
     const objectid = new ObjectId(CourseId);
-    return from(this.CourseModule.deleteOne({ _id: objectid }).exec()).pipe(
-      map((result) => result.deletedCount > 0),
+    let adminId: string;
+    let courseName: string;
+
+    return from(this.CourseModule.findOne({ _id: objectid }).exec()).pipe(
+      tap((course) => {
+        adminId = course.adminId;
+        courseName = course.title;
+      }),
+      switchMap(() =>
+        from(
+          this.adminRepository
+            .findOneAndUpdate(
+              { _id: adminId },
+              { $pull: { course: courseName } },
+            )
+            .exec(),
+        ),
+      ),
+      switchMap(() =>
+        from(this.CourseModule.deleteOne({ _id: objectid }).exec()),
+      ),
+      switchMap(() =>
+        from(
+          this.RouteModule.updateMany(
+            { courses: { $in: [courseName] } },
+            { $pull: { courses: courseName } },
+          ).exec(),
+        ),
+      ),
+      switchMap(() => {
+        return from(
+          this.RouteModule.find({ courses: { $size: 0 } }, { title: 1 }).exec(),
+        ).pipe(
+          map((routes) => routes.map((route) => route.title)),
+          switchMap((routeNames) => {
+            return from(this.adminRepository.find({}).exec()).pipe(
+              switchMap((admins) => {
+                const updates$ = admins.map((admin) => {
+                  routeNames.forEach((routeName) => {
+                    if (admin.route.includes(routeName)) {
+                      admin.route = admin.route.filter(
+                        (route) => route !== routeName,
+                      );
+                    }
+                  });
+                  return from(admin.save());
+                });
+                return forkJoin(updates$);
+              }),
+            );
+          }),
+        );
+      }),
+      switchMap(() =>
+        from(
+          this.RouteModule.find({ courses: { $size: 0 } }, { id: 1 }).exec(),
+        ).pipe(
+          map((routes) => routes.map((route) => route.id)),
+          switchMap((routeNames) =>
+            from(this.learnerRepository.find({}).exec()).pipe(
+              switchMap((learners) => {
+                const updates$ = learners.map((learner) => {
+                  routeNames.forEach((routeName) => {
+                    if (learner.route.includes(routeName)) {
+                      learner.route = learner.route.filter(
+                        (route) => route !== routeName,
+                      );
+                    }
+                  });
+                  return from(learner.save());
+                });
+                return forkJoin(updates$);
+              }),
+            ),
+          ),
+        ),
+      ),
+      switchMap(() =>
+        from(this.RouteModule.deleteMany({ courses: { $size: 0 } }).exec()),
+      ),
+      map(() => true),
     );
   }
 
