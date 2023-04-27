@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsString,
-  IsNotEmpty,
   IsMongoId,
-  MinLength,
+  IsNotEmpty,
+  IsString,
   Matches,
+  MinLength,
 } from 'class-validator';
 
 export class SendWorkshopDto {
@@ -24,7 +24,7 @@ export class SendWorkshopDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñÑ\s\d]+$/)
+  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
   @ApiProperty()
   coment: string;
 }

@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsString,
   IsArray,
-  IsNotEmpty,
   IsMongoId,
-  MinLength,
+  IsNotEmpty,
+  IsString,
   Matches,
   IsOptional,
+  MinLength,
 } from 'class-validator';
 import { CourseEntity } from 'src/Domain/entities';
 
@@ -14,21 +14,21 @@ export class RegisterCourseDto implements CourseEntity {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñÑ\s]+$/)
+  @Matches(/^[A-Za-zñáéíóúÑÁÉÍÓÚ\s]+$/)
   @ApiProperty()
   title: string;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñÑ\s\d]+$/)
+  @Matches(/^[A-Za-záéíóúñÑ\s\d.,]+$/)
   @ApiProperty()
   description: string;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Matches(/^[A-Za-zñÑ\s\d]+$/)
+  @Matches(/^[A-Za-záéíóúñÑ\s\d.,]+$/)
   @MinLength(5)
   duration: string;
 
@@ -36,7 +36,7 @@ export class RegisterCourseDto implements CourseEntity {
   @IsNotEmpty()
   @ApiProperty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñÑ\s\d]+$/)
+  @Matches(/^[A-Za-záéíóúñÑ\s\d.,]+$/)
   requirements: string;
 
   @IsArray()

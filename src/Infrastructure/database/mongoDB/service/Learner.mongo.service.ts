@@ -30,6 +30,6 @@ export class LearnerMongoService implements ILearnerDomainService {
     comment: string,
     courseId: string,
   ): Observable<CalificationEntity> {
-    return this.learnerRepository.saveCalification(grade, courseId, comment);
+    return this.learnerRepository.saveCalification(grade, comment, courseId);
   }
 }
