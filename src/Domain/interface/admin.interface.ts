@@ -4,7 +4,7 @@ import { IRoute } from './route.interface';
 import { IUser } from './user.interface';
 
 export interface IAdmin extends IUser {
-  course?: ICourse[];
-  route?: IRoute[];
+  course?: string[];
+  route?: string[];
   notifications?: INotification[];
 }

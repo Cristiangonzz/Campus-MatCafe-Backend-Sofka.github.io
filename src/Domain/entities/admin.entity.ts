@@ -2,8 +2,8 @@ import { IAdmin, ICourse, IRoute } from '../interface';
 import { NotificationEntity } from './notification.entity';
 
 export class AdminEntity implements IAdmin {
-  course?: ICourse[];
-  route?: IRoute[];
+  course?: string[];
+  route?: string[];
   notifications?: NotificationEntity[];
   email: string;
   firebaseId?: string;

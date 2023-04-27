@@ -14,24 +14,24 @@ export class UpdateCourseDto implements CourseEntity {
   @IsOptional()
   @MinLength(5)
   @ApiProperty()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñáéíóúÑÁÉÍÓÚ\s]+$/)
   title: string;
   @MinLength(5)
   @IsString()
   @IsOptional()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-záéíóúñÑ\s\d.,]+$/)
   @ApiProperty()
   description: string;
   @MinLength(5)
   @IsString()
   @IsOptional()
   @ApiProperty()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-záéíóúñÑ\s\d.,]+$/)
   duration: string;
   @MinLength(5)
   @IsString()
   @IsOptional()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-záéíóúñÑ\s\d.,]+$/)
   @ApiProperty()
   requirements: string;
   @IsArray()
@@ -44,4 +44,8 @@ export class UpdateCourseDto implements CourseEntity {
   @ApiProperty()
   @IsMongoId()
   adminId: string;
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  url?: string;
 }

@@ -29,6 +29,9 @@ export class Course {
   @Prop({ required: true })
   @ApiProperty()
   adminId: string;
+  @Prop()
+  @ApiProperty()
+  url?: string;
 }
 
 export const CourseSchema = SchemaFactory.createForClass(Course);

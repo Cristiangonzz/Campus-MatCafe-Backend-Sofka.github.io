@@ -12,11 +12,11 @@ export type AdminDocument = Admin & Document;
 export class Admin {
   @Prop({ type: [{ type: Object }] })
   @ApiProperty()
-  course?: Course[];
+  course?: string[];
 
   @Prop({ type: [{ type: Object }] })
   @ApiProperty()
-  route?: Route[];
+  route?: string[];
 
   @Prop({ type: [{ type: Object }] })
   @ApiProperty()
