@@ -1,15 +1,7 @@
-import {
-  Body,
-  ConflictException,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Observable, catchError, of, switchMap } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { NotificationEntity } from 'src/Domain/entities';
 import { AdminDelegate } from '../../Application/delegate/admin.delegate';
 import { AdminEntity } from '../../Domain/entities/admin.entity';
@@ -33,16 +25,12 @@ export class AdminController {
 
   @ApiOperation({ summary: 'Create User' })
   @Post('createUser')
-  createUser(@Body() user: UserDto): Observable<AdminEntity | LearnerEntity> {
+  createUser(@Body() user: UserDto) {
     this.delegate.toGetAdminAndLearnerEmail();
-    const search = this.delegate.execute(user.email).pipe(
-      switchMap((data) => {
+    return this.delegate.execute(user.email).pipe(
+      map((data) => {
         if (data) {
-          return of(
-            new ConflictException(
-              'Ya existe un usuario con el correo proporcionado',
-            ),
-          );
+          throw new Error('Ya existe un usuario con el correo proporcionado');
         }
       }),
       catchError((err) => {
@@ -56,13 +44,8 @@ export class AdminController {
             : this.delegate.toCreateLearner();
           return this.delegate.execute(user);
         }
-      }),
-    );
-
-    return search.pipe(
-      catchError((err) => {
         console.log(err);
-        return of(err);
+        return throwError(err);
       }),
     );
   }

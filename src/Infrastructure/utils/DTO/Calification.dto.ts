@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsNotEmpty,
-  MinLength,
-  IsString,
-  IsMongoId,
   IsInt,
+  IsMongoId,
+  IsNotEmpty,
+  IsString,
+  Matches,
   Max,
   Min,
-  Matches,
+  MinLength,
 } from 'class-validator';
 import { CalificationEntity } from 'src/Domain/entities';
 
@@ -22,7 +22,7 @@ export class CalificationDto implements CalificationEntity {
   @IsNotEmpty()
   @MinLength(5)
   @ApiProperty()
-  @Matches(/^[A-Za-zñÑ\s\d]+$/)
+  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
   comment?: string;
   @IsString()
   @IsNotEmpty()

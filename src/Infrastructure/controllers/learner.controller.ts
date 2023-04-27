@@ -58,9 +58,9 @@ export class LearnerController {
     } = JSON.parse(data);
 
     const califi = new CalificationEntity(
-      calification.data.comment,
-      calification.data.grade,
       calification.data.courseId,
+      calification.data.grade,
+      calification.data.comment,
     );
 
     this.delegate.toSaveCalification();
