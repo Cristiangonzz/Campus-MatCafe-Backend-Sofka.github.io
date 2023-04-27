@@ -8,6 +8,7 @@ export class CourseEntity implements ICourse {
   content: string[];
   adminId: string;
   id?: string;
+  url?: string;
 
   constructor(
     title?: string,
