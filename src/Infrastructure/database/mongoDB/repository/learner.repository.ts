@@ -43,22 +43,29 @@ export class LearnerRepository {
         const coursName = cours.title;
         const adminId = cours.adminId;
         console.log(coursName);
-        return from(this.adminRepository.findById(adminId)).pipe(
-          switchMap((admin) => {
-            const notificationExists = admin.notifications.some(
-              (notification) =>
-                notification.id === id &&
-                notification.repo === repo &&
-                notification.course === coursName,
-            );
-            course = coursName;
-            if (!notificationExists) {
-              admin.notifications.push({ id, repo, course, coment });
-            }
+        return from(this.learnerRepository.findById(id)).pipe(
+          mergeMap((learner) => {
+            const learnerEmail = learner.email;
+            console.log(coursName);
+            return from(this.adminRepository.findById(adminId)).pipe(
+              switchMap((admin) => {
+                const notificationExists = admin.notifications.some(
+                  (notification) =>
+                    notification.id === id &&
+                    notification.repo === repo &&
+                    notification.course === coursName,
+                );
+                id = learnerEmail;
+                course = coursName;
+                if (!notificationExists) {
+                  admin.notifications.push({ id, repo, course, coment });
+                }
 
-            return from(admin.save()).pipe(
-              switchMap(() => {
-                return of('Tarea enviada correctamente');
+                return from(admin.save()).pipe(
+                  switchMap(() => {
+                    return of('Tarea enviada correctamente');
+                  }),
+                );
               }),
             );
           }),
