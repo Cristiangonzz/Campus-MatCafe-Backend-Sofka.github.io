@@ -5,7 +5,6 @@ import {
   IsNotEmpty,
   IsString,
   Matches,
-  IsOptional,
   MinLength,
 } from 'class-validator';
 import { CourseEntity } from 'src/Domain/entities';
@@ -14,21 +13,21 @@ export class RegisterCourseDto implements CourseEntity {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñáéíóúÑÁÉÍÓÚ\s]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   @ApiProperty()
   title: string;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-záéíóúñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   @ApiProperty()
   description: string;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Matches(/^[A-Za-záéíóúñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   @MinLength(5)
   duration: string;
 
@@ -36,7 +35,7 @@ export class RegisterCourseDto implements CourseEntity {
   @IsNotEmpty()
   @ApiProperty()
   @MinLength(5)
-  @Matches(/^[A-Za-záéíóúñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   requirements: string;
 
   @IsArray()

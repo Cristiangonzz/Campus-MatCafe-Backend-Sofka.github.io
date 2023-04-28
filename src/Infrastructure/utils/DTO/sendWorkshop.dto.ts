@@ -24,7 +24,7 @@ export class SendWorkshopDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   @ApiProperty()
   coment: string;
 }
