@@ -124,6 +124,8 @@ export class AdminRepository {
   ): Observable<string> {
     return from(this.courseRepository.findById(calification.courseId)).pipe(
       switchMap((course) => {
+        const courseName = course.title;
+        console.log(courseName);
         if (!course) {
           throw new Error(`Curso ${calification.courseId} no existe`);
         }
@@ -150,10 +152,22 @@ export class AdminRepository {
             }
 
             return from(user.save()).pipe(
-              map(
-                () =>
-                  `Calificación actualizada curso ${calification.courseId} y su calificacion fue de ${calification.grade} `,
-              ),
+              switchMap(() => {
+                return from(this.adminRepository.find().exec()).pipe(
+                  map((admins) => {
+                    admins.forEach((admin) => {
+                      const index = admin.notifications.findIndex(
+                        (n) => n.id === learnerId && n.course === courseName,
+                      );
+                      if (index !== -1) {
+                        admin.notifications.splice(index, 1);
+                        admin.save();
+                      }
+                    });
+                    return `Calificación actualizada curso ${calification.courseId} y su calificacion fue de ${calification.grade}`;
+                  }),
+                );
+              }),
             );
           }),
         );
