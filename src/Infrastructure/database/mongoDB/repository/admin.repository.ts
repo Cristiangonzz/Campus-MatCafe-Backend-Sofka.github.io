@@ -131,6 +131,7 @@ export class AdminRepository {
         }
         return from(this.learnerRepository.findById(learnerId)).pipe(
           switchMap((user) => {
+            const learnerEmail = user.email;
             if (!Array.isArray(user.calification)) {
               user.calification = [];
             }
@@ -157,7 +158,7 @@ export class AdminRepository {
                   map((admins) => {
                     admins.forEach((admin) => {
                       const index = admin.notifications.findIndex(
-                        (n) => n.id === learnerId && n.course === courseName,
+                        (n) => n.id === learnerEmail && n.course === courseName,
                       );
                       if (index !== -1) {
                         admin.notifications.splice(index, 1);
