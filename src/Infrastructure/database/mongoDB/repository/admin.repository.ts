@@ -122,9 +122,7 @@ export class AdminRepository {
     learnerId: string,
     calification: CalificationEntity,
   ): Observable<string> {
-    return from(
-      this.courseRepository.findOne({ title: calification.courseId }),
-    ).pipe(
+    return from(this.courseRepository.findById(calification.courseId)).pipe(
       switchMap((course) => {
         const courseName = course.title;
         console.log(courseName);
