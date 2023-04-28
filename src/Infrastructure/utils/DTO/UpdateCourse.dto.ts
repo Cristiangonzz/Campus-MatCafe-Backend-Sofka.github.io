@@ -14,24 +14,24 @@ export class UpdateCourseDto implements CourseEntity {
   @IsOptional()
   @MinLength(5)
   @ApiProperty()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   title: string;
   @MinLength(5)
   @IsString()
   @IsOptional()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   @ApiProperty()
   description: string;
   @MinLength(5)
   @IsString()
   @IsOptional()
   @ApiProperty()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   duration: string;
   @MinLength(5)
   @IsString()
   @IsOptional()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   @ApiProperty()
   requirements: string;
   @IsArray()

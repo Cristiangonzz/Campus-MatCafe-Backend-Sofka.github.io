@@ -13,21 +13,21 @@ export class RegisterCourseDto implements CourseEntity {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñÑ\s]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   @ApiProperty()
   title: string;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   @ApiProperty()
   description: string;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   @MinLength(5)
   duration: string;
 
@@ -35,7 +35,7 @@ export class RegisterCourseDto implements CourseEntity {
   @IsNotEmpty()
   @ApiProperty()
   @MinLength(5)
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   requirements: string;
 
   @IsArray()

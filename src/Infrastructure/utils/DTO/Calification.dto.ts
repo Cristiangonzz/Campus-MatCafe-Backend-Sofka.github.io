@@ -22,7 +22,7 @@ export class CalificationDto implements CalificationEntity {
   @IsNotEmpty()
   @MinLength(5)
   @ApiProperty()
-  @Matches(/^[A-Za-zñÑ\s\d.,]+$/)
+  @Matches(/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s\d.,]+$/)
   comment?: string;
   @IsString()
   @IsNotEmpty()
