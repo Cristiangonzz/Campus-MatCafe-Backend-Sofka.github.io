@@ -40,17 +40,18 @@ export class LearnerRepository {
   ): Observable<string> {
     return from(this.CourseModule.findById(course)).pipe(
       mergeMap((cours) => {
+        const coursName = cours.title;
         const adminId = cours.adminId;
-
+        console.log(coursName);
         return from(this.adminRepository.findById(adminId)).pipe(
           switchMap((admin) => {
             const notificationExists = admin.notifications.some(
               (notification) =>
                 notification.id === id &&
                 notification.repo === repo &&
-                notification.course === course,
+                notification.course === coursName,
             );
-
+            course = coursName;
             if (!notificationExists) {
               admin.notifications.push({ id, repo, course, coment });
             }
