@@ -30,7 +30,7 @@ import { RouteServiceMongo } from './service/route.mongo.service';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb://mongo:i19yCGFumWjF0xDU0ivg@containers-us-west-140.railway.app:7798',
+      'mongodb://mongo:kpXvJKA8tKueIceEqQLg@containers-us-west-170.railway.app:5651',
       {
         autoCreate: true,
       },
